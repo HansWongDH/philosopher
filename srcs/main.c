@@ -6,66 +6,24 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 16:50:04 by wding-ha          #+#    #+#             */
-/*   Updated: 2022/04/12 18:41:46 by wding-ha         ###   ########.fr       */
+/*   Updated: 2022/04/12 19:30:34 by wding-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Philosophers.h"
 
-int	grab_left(t_philo *info)
+void	grab_fork(t_philo *info)
 {
-	int	i;
-	int	j;
-
-	if (info->id == info->data->philo - 1)
-		i = 0;
-	else
-		i = info->id + 1;
-	j = pthread_mutex_lock(&(info->data->lock[i]));
-	// printf("%d left\n", i);
-	return (j);
+	pthread_mutex_lock(&(info->data->lock[info->id + (1 % info->data->philo)]));
+	printf("philo %d is eating \n", info->id);
+	usleep(info->data->eat);
+	pthread_mutex_unlock(&(info->data->lock[info->id]));
+	pthread_mutex_unlock(&(info->data->lock[info->id + (1 % info->data->philo)]));
 }
 
-int	grab_right(t_philo *info)
+void	drop_fork(t_philo *info)
 {
-	int	i;
-	int	j;
-
-	if (info->id == 0)
-		i = info->data->philo - 1;
-	else
-		i = info->id - 1;
-	j = pthread_mutex_lock(&(info->data->lock[i]));
-	// printf("%d right\n", i);
-	return (j);
-}
-
-int	drop_left(t_philo *info)
-{
-	int	i;
-	int	j;
-
-	if (info->id == info->data->philo - 1)
-		i = 0;
-	else
-		i = info->id + 1;
-	j = pthread_mutex_unlock(&(info->data->lock[i]));
-	// printf("%d left\n", j);
-	return (j);
-}
-
-int	drop_right(t_philo *info)
-{
-	int	i;
-	int	j;
-
-	if (info->id == 0)
-		i = info->data->philo - 1;
-	else
-		i = info->id - 1;
-	j = pthread_mutex_unlock(&(info->data->lock[i]));
-	// printf("%d right\n", j);
-	return (j);
+	pthread_mutex_unlock(&(info->data->lock[info->id]));
 }
 
 void	build_info(t_data *info, char **argv)
@@ -82,17 +40,13 @@ void	*eat(void *args)
 	t_philo	*stats;
 
 	stats = (t_philo *)args;
-	if (!stats->id % 1)
-		usleep(500);
-	grab_left(stats);
-	grab_right(stats);
-	printf("Philosopher %d is eating \n", stats->id);
-	usleep(stats->data->eat);
-	drop_left(stats);
-	drop_right(stats);
-	printf("Philosopher %d is sleeping \n", stats->id);
-	usleep(stats->data->sleep);
-
+	while (1)
+	{
+		if (!pthread_mutex_lock(&(stats->data->lock[stats->id])))
+			grab_fork(stats);
+		printf("Philo %d is sleeping \n", stats->id);
+		usleep(stats->data->sleep);
+	}
 	return (NULL);
 }
 
