@@ -1,18 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Philosophers.h                                     :+:      :+:    :+:   */
+/*   ft_isalpha.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/08 16:05:20 by wding-ha          #+#    #+#             */
-/*   Updated: 2022/04/08 16:29:31 by wding-ha         ###   ########.fr       */
+/*   Created: 2021/05/13 15:41:40 by wding-ha          #+#    #+#             */
+/*   Updated: 2021/06/03 19:27:03 by wding-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PHILOSOPHERS_H
-# define PHILOSOPHERS_H
+#include "libft.h"
 
-
-
-#endif
+int	ft_isalpha(int c)
+{
+	if (c >= 65 && c <= 90)
+		return (1);
+	if (c >= 97 && c <= 122)
+		return (1);
+	return (0);
+}
