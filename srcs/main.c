@@ -6,7 +6,7 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 16:50:04 by wding-ha          #+#    #+#             */
-/*   Updated: 2022/04/13 16:14:11 by wding-ha         ###   ########.fr       */
+/*   Updated: 2022/04/13 19:22:39 by wding-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,4 +26,5 @@ int	main(int argc, char **argv)
 	while (i < info.philo)
 		pthread_mutex_init(&(info.lock[i++]), NULL);
 	create_thread(&info);
+	destroy_mutex(&info);
 }

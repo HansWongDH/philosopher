@@ -1,23 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   build_info.c                                       :+:      :+:    :+:   */
+/*   destroy_lock.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/13 15:26:36 by wding-ha          #+#    #+#             */
-/*   Updated: 2022/04/13 18:39:33 by wding-ha         ###   ########.fr       */
+/*   Created: 2022/04/13 18:09:07 by wding-ha          #+#    #+#             */
+/*   Updated: 2022/04/13 19:12:25 by wding-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Philosophers.h"
 
-void	build_info(t_data *info, char **argv)
+void	destroy_mutex(t_data *info)
 {
-	info->philo = ft_atoi(argv[1]);
-	info->death = ft_atoi(argv[2]) * 1000;
-	info->eat = ft_atoi(argv[3]) * 1000;
-	info->sleep = ft_atoi(argv[4]) * 1000;
-	info->dead = 0;
-	pthread_mutex_init(&(info->print), NULL);
+	int	i;
+
+	i = 0;
+	pthread_mutex_destroy(&(info->print));
+	while (i < info->philo)
+		pthread_mutex_destroy(&(info->lock[i++]));
 }

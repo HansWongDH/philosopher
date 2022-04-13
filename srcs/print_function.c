@@ -1,23 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   build_info.c                                       :+:      :+:    :+:   */
+/*   print_function.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/13 15:26:36 by wding-ha          #+#    #+#             */
-/*   Updated: 2022/04/13 18:39:33 by wding-ha         ###   ########.fr       */
+/*   Created: 2022/04/13 17:34:35 by wding-ha          #+#    #+#             */
+/*   Updated: 2022/04/13 19:45:48 by wding-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Philosophers.h"
+#include "color.h"
 
-void	build_info(t_data *info, char **argv)
+void	print_text(char *s, int state, int id, t_data *info)
 {
-	info->philo = ft_atoi(argv[1]);
-	info->death = ft_atoi(argv[2]) * 1000;
-	info->eat = ft_atoi(argv[3]) * 1000;
-	info->sleep = ft_atoi(argv[4]) * 1000;
-	info->dead = 0;
-	pthread_mutex_init(&(info->print), NULL);
+	char	*c;
+
+	pthread_mutex_lock(&(info->print));
+	if (state == 0)
+		c = CYAN;
+	if (state == 1)
+		c = YELLOW;
+	if (state == 2)
+		c = GREEN;
+	if (state == 3)
+		c = BLUE;
+	if (state == 4)
+		c = RED;
+	printf("%s%lld Philosopher %d %s", c, get_milisec(), id, s);
+	pthread_mutex_unlock(&(info->print));
 }
