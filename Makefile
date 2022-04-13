@@ -6,7 +6,7 @@
 #    By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/12 18:02:33 by wding-ha          #+#    #+#              #
-#    Updated: 2022/04/12 11:53:02 by wding-ha         ###   ########.fr        #
+#    Updated: 2022/04/13 15:27:56 by wding-ha         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,7 +37,7 @@ SRC_DIR			= srcs/
 #sSOURCE FILE#
 ##############
 
-S_SRCS			= $(SRC_DIR)main.c
+S_SRCS			= $(SRC_DIR)main.c $(SRC_DIR)pthread_create.c $(SRC_DIR)build_info.c
 
 OBJS			= $(S_SRCS:.c=.o)
 
