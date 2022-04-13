@@ -6,7 +6,7 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 16:05:20 by wding-ha          #+#    #+#             */
-/*   Updated: 2022/04/13 19:39:24 by wding-ha         ###   ########.fr       */
+/*   Updated: 2022/04/13 19:56:39 by wding-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ typedef struct s_philo {
 	int			id;
 	int			rfork;
 	int			lfork;
+	long long	last_eaten;
 	t_data		*data;
 }				t_philo;
 
@@ -46,5 +47,6 @@ void		create_thread(t_data *info);
 void		print_text(char *s, int state, int id, t_data *info);
 void		destroy_mutex(t_data *info);
 long long	get_milisec(void);
+int			check_death(long long lasteat, t_data *info);
 
 #endif
