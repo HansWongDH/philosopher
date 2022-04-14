@@ -6,7 +6,7 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 16:50:04 by wding-ha          #+#    #+#             */
-/*   Updated: 2022/04/13 19:22:39 by wding-ha         ###   ########.fr       */
+/*   Updated: 2022/04/14 16:10:22 by wding-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,11 @@ int	main(int argc, char **argv)
 
 	if (argc != 5 && argc != 6)
 		return (0);
-	if (argc == 5)
-		build_info(&info, argv);
+	build_info(&info, argv, argc);
 	i = 0;
-	info.lock = malloc(sizeof(pthread_mutex_t *) * info.philo);
+	info.lock = malloc(sizeof(pthread_mutex_t) * info.philo);
 	while (i < info.philo)
 		pthread_mutex_init(&(info.lock[i++]), NULL);
-	create_thread(&info);
+	eating_count(&info);
 	destroy_mutex(&info);
 }
