@@ -6,7 +6,7 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 15:24:02 by wding-ha          #+#    #+#             */
-/*   Updated: 2022/04/14 16:36:51 by wding-ha         ###   ########.fr       */
+/*   Updated: 2022/04/14 18:48:55 by wding-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,12 @@
 void	action(t_philo *info)
 {
 	if (info->data->dead == 0)
-	{
 		print_text("has taken a fork\n", 1, info->id, info->data);
-		info->last_eaten = get_milisec();
+	if (info->data->dead == 0)
+	{
 		print_text("is eating\n", 2, info->id, info->data);
+		info->last_eaten = get_milisec();
 		usleep(info->data->eat);
-		print_text("is sleeping\n", 3, info->id, info->data);
-		usleep(info->data->sleep);
 	}
 }
 void	*eat(void *args)
@@ -42,6 +41,11 @@ void	*eat(void *args)
 		action(info);
 		pthread_mutex_unlock(&(info->data->lock[info->lfork]));
 		pthread_mutex_unlock(&(info->data->lock[info->rfork]));
+		if (info->data->dead == 0)
+		{
+			print_text("is sleeping\n", 3, info->id, info->data);
+			usleep(info->data->sleep);
+		}
 	}
 	return (NULL);
 }
@@ -74,5 +78,10 @@ void	create_thread(t_data *info)
 		pthread_join(checker[i], NULL);
 		i++;
 	}
-	
+	pthread_mutex_lock(&(info->checklock));
+	if (info->timeleft == 0 || info->done == 1)
+			info->done = 1;
+	pthread_mutex_unlock(&(info->checklock));
+	free(ph);
+	free(checker);
 }

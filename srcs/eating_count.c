@@ -6,7 +6,7 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/14 16:00:02 by wding-ha          #+#    #+#             */
-/*   Updated: 2022/04/14 16:44:56 by wding-ha         ###   ########.fr       */
+/*   Updated: 2022/04/14 18:58:27 by wding-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,12 @@ void	*eat_count(void	*args)
 
 	info = args;
 	pthread_mutex_lock(&(info->countlock));
-	while (info->timeleft > 0)
+	while (info->timeleft > 0 && info->done == 0)
 	{
-		create_thread(info);
 		info->timeleft--;
+		create_thread(info);
+	
 	}
-	if (info->timeleft == 0)
-		info->dead = 2;
 	pthread_mutex_unlock(&(info->countlock));
 	return (NULL);
 }
