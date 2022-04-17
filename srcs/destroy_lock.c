@@ -6,7 +6,7 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 18:09:07 by wding-ha          #+#    #+#             */
-/*   Updated: 2022/04/17 15:13:31 by wding-ha         ###   ########.fr       */
+/*   Updated: 2022/04/17 20:13:29 by wding-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,6 @@ void	destroy_mutex(t_data *info)
 	pthread_mutex_destroy(&(info->print));
 	while (i < info->philo)
 		pthread_mutex_destroy(&(info->lock[i++]));
-	// pthread_mutex_destroy(&(info->deadlock));
+	pthread_mutex_destroy(&(info->checklock));
 	free(info->lock);
 }

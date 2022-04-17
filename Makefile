@@ -6,7 +6,7 @@
 #    By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/12 18:02:33 by wding-ha          #+#    #+#              #
-#    Updated: 2022/04/14 17:23:46 by wding-ha         ###   ########.fr        #
+#    Updated: 2022/04/17 20:25:45 by wding-ha         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,7 +38,7 @@ SRC_DIR			= srcs/
 ##############
 
 S_SRCS			= $(SRC_DIR)main.c $(SRC_DIR)pthread_create.c $(SRC_DIR)build_info.c $(SRC_DIR)print_function.c\
-				$(SRC_DIR)destroy_lock.c $(SRC_DIR)time.c $(SRC_DIR)check_death.c $(SRC_DIR)eating_count.c 
+				$(SRC_DIR)destroy_lock.c $(SRC_DIR)time.c $(SRC_DIR)check_death.c
 
 OBJS			= $(S_SRCS:.c=.o)
 

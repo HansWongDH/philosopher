@@ -6,26 +6,24 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 15:24:02 by wding-ha          #+#    #+#             */
-/*   Updated: 2022/04/17 19:18:36 by wding-ha         ###   ########.fr       */
+/*   Updated: 2022/04/17 20:26:32 by wding-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Philosophers.h"
 
-void	eat(t_philo *info, pthread_mutex_t *lock)
+void	eat(t_philo *info)
 {	
 	if (info->data->dead == 0)
 	{
 		pthread_mutex_lock(&(info->data->lock[info->rfork]));
 		print_text("has taken a fork\n", YELLOW, info->id, info->data);
-		printf("fork is is %d\n", info->rfork);
 		pthread_mutex_lock(&(info->data->lock[info->lfork]));
 		print_text("has taken a fork\n", YELLOW, info->id, info->data);
-		printf("fork is is %d\n", info->lfork);
 		print_text("is eating\n", GREEN, info->id, info->data);
 		info->last_eaten = get_milisec();
 		info->eaten--;
-		self_sleep(info->data->eat, lock);
+		self_sleep(info->data->eat);
 		pthread_mutex_lock(&(info->data->checklock));
 		if (!info->eaten)
 			info->data->done++;
@@ -35,12 +33,12 @@ void	eat(t_philo *info, pthread_mutex_t *lock)
 	}
 }
 
-void	sleeping(t_philo *info, pthread_mutex_t *lock)
+void	sleeping(t_philo *info)
 {
 	if (info->data->dead == 0)
 	{
 		print_text("is sleeping\n", BLUE, info->id, info->data);
-		self_sleep(info->data->sleep, lock);
+		self_sleep(info->data->sleep);
 	}
 }
 
@@ -48,29 +46,40 @@ void	*action(void *args)
 {
 	t_philo			*info;
 	pthread_mutex_t	sleep;
-	
+
 	info = (t_philo *)args;
 	pthread_mutex_init(&sleep, NULL);
+	print_text("is thinking\n", CYAN, info->id, info->data);
 	if (info->id % 2 == 0 && info->data->dead == 0)
-	{	
-		print_text("is thinking\n", CYAN, info->id, info->data);
-		self_sleep(info->data->eat / 2, &sleep);
-	}
-	while (info->eaten > 0)
+		self_sleep(info->data->eat / 2);
+	while (info->eaten > 0 && info->data->dead == 0)
 	{
-		eat(info, &sleep);
-		sleeping(info, &sleep);	
+		eat(info);
+		sleeping(info);
 	}
 	pthread_mutex_destroy(&sleep);
 	return (NULL);
+}
+
+void	join_thread(t_philo **ph, pthread_t **checker, int num)
+{
+	int	i;
+
+	i = 0;
+	while (i < num)
+	{
+		pthread_join((*ph)[i].thread, NULL);
+		pthread_join((*checker)[i], NULL);
+		i++;
+	}
 }
 
 void	create_thread(t_data *info)
 {
 	t_philo		*ph;
 	pthread_t	*checker;
-	int		i;
-	
+	int			i;
+
 	ph = malloc(sizeof (t_philo) * info->philo);
 	checker = malloc(sizeof (pthread_t) * info->philo);
 	i = 0;
@@ -86,13 +95,7 @@ void	create_thread(t_data *info)
 		pthread_create(&(checker[i]), NULL, &death, (void *)&ph[i]);
 		i++;
 	}
-	i = 0;
-	while (i < info->philo)
-	{
-		pthread_join(ph[i].thread, NULL);
-		pthread_join(checker[i], NULL);
-		i++;
-	}
+	join_thread(&ph, &checker, info->philo);
 	free(ph);
 	free(checker);
 }
