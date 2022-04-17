@@ -6,7 +6,7 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 16:05:20 by wding-ha          #+#    #+#             */
-/*   Updated: 2022/04/14 18:54:04 by wding-ha         ###   ########.fr       */
+/*   Updated: 2022/04/17 19:00:02 by wding-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <stdio.h>
 # include <sys/time.h>
 # include "libft.h"
+# include "color.h"
 
 typedef struct s_data {
 	int				philo;
@@ -29,8 +30,6 @@ typedef struct s_data {
 	int				done;
 	pthread_mutex_t	*lock;
 	pthread_mutex_t	print;
-	pthread_mutex_t	deadlock;
-	pthread_mutex_t	countlock;
 	pthread_mutex_t checklock;
 }				t_data;
 
@@ -40,17 +39,18 @@ typedef struct s_philo {
 	int				rfork;
 	int				lfork;
 	long long		last_eaten;
-	int				die;
+	int				eaten;
 	t_data			*data;
 }				t_philo;
 
 void		build_info(t_data *info, char **argv, int argc);
-void		*eat(void *args);
+void		*action(void *args);
 void		create_thread(t_data *info);
-void		print_text(char *s, int state, int id, t_data *info);
+void		print_text(char *s, char *c, int id, t_data *info);
 void		destroy_mutex(t_data *info);
 long long	get_milisec(void);
 void		*death(void *arg);
 void		eating_count(t_data *info);
+void		self_sleep(int time, pthread_mutex_t *lock);
 
 #endif

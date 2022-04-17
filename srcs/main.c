@@ -6,7 +6,7 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 16:50:04 by wding-ha          #+#    #+#             */
-/*   Updated: 2022/04/14 17:28:40 by wding-ha         ###   ########.fr       */
+/*   Updated: 2022/04/17 15:14:07 by wding-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	main(int argc, char **argv)
 	info.lock = malloc(sizeof(pthread_mutex_t) * info.philo);
 	while (i < info.philo)
 		pthread_mutex_init(&(info.lock[i++]), NULL);
-	eating_count(&info);
+	create_thread(&info);
 	destroy_mutex(&info);
 	return (0);
 }
