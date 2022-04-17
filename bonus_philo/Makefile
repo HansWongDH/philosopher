@@ -6,7 +6,7 @@
 #    By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/12 18:02:33 by wding-ha          #+#    #+#              #
-#    Updated: 2022/04/17 20:25:45 by wding-ha         ###   ########.fr        #
+#    Updated: 2022/04/17 20:45:10 by wding-ha         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,6 +15,7 @@
 ###########
 
 NAME			= philo
+B_NAME			= philo_bonus
 
 #######
 #FLAGS#
@@ -29,7 +30,7 @@ RM				= rm -f
 ##################
 
 INC				= -Iinclude -I$(LIBFT_DIR)
-LIBFT_DIR		= libs/libft
+LIBFT_DIR		= ../libs/libft
 LIB				= -L$(LIBFT_DIR) -lft
 SRC_DIR			= srcs/
 
