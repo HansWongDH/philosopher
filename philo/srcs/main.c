@@ -6,7 +6,7 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 16:50:04 by wding-ha          #+#    #+#             */
-/*   Updated: 2022/04/17 15:14:07 by wding-ha         ###   ########.fr       */
+/*   Updated: 2022/04/17 23:03:43 by wding-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ int	main(int argc, char **argv)
 
 	if (argc != 5 && argc != 6)
 		return (0);
+	if (!input_checking(argv, argc))
+		exit(1);
 	build_info(&info, argv, argc);
 	i = 0;
 	info.lock = malloc(sizeof(pthread_mutex_t) * info.philo);

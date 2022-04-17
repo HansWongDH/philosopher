@@ -6,11 +6,51 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 15:26:36 by wding-ha          #+#    #+#             */
-/*   Updated: 2022/04/17 20:13:24 by wding-ha         ###   ########.fr       */
+/*   Updated: 2022/04/17 23:14:01 by wding-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Philosophers.h"
+
+int		error(void)
+{
+	ft_putstr_fd("Error\n", 2);
+	return (0);
+}
+
+int	ft_checkdigit(char *str)
+{
+	int	i;
+
+	i = 0;
+	if (str[i] == '-')
+		i++;
+	if (!ft_isdigit(str[i]))
+		return (0);
+	while (ft_isdigit(str[i]))
+		i++;
+	if (!ft_isdigit(str[i]) && str[i])
+		return (0);
+	return (1);
+}
+
+int		input_checking(char **av, int ac)
+{
+	int	i;
+	
+	i = 1;
+	// if (ft_atoi(av[1]) <= 0)
+	// 	return (error());
+	while (i < ac)
+	{
+		if (ft_atoi(av[i]) <= 0)
+			return (error());
+		if (!ft_checkdigit(av[i]))
+			return (error());
+		i++;
+	}
+	return (1);
+}
 
 void	build_info(t_data *info, char **argv, int argc)
 {

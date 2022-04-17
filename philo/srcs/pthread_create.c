@@ -6,7 +6,7 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 15:24:02 by wding-ha          #+#    #+#             */
-/*   Updated: 2022/04/17 20:26:32 by wding-ha         ###   ########.fr       */
+/*   Updated: 2022/04/17 22:57:23 by wding-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,8 +80,10 @@ void	create_thread(t_data *info)
 	pthread_t	*checker;
 	int			i;
 
-	ph = malloc(sizeof (t_philo) * info->philo);
-	checker = malloc(sizeof (pthread_t) * info->philo);
+	if (!ft_malloc((void *)&ph, sizeof(t_philo) * info->philo))
+		return ;
+	if (!ft_malloc((void *)&checker, sizeof(pthread_t) * info->philo))
+		return ;
 	i = 0;
 	while (i < info->philo)
 	{
