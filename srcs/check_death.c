@@ -6,7 +6,7 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 19:48:57 by wding-ha          #+#    #+#             */
-/*   Updated: 2022/04/17 20:17:18 by wding-ha         ###   ########.fr       */
+/*   Updated: 2022/04/17 20:35:59 by wding-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ void	*death(void *arg)
 		{
 			info->data->dead = 1;
 			printf("%s%lld Philosopher %d died\n", RED, get_milisec(), info->id);
+			exit(1);
 		}
 	}
 	return (NULL);
