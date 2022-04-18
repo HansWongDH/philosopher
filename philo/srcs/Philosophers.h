@@ -6,7 +6,7 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 16:05:20 by wding-ha          #+#    #+#             */
-/*   Updated: 2022/04/17 23:02:12 by wding-ha         ###   ########.fr       */
+/*   Updated: 2022/04/18 13:23:40 by wding-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ typedef struct s_data {
 	int				timeleft;		
 	int				dead;
 	int				done;
+	int				start;
 	pthread_mutex_t	*lock;
 	pthread_mutex_t	print;
 	pthread_mutex_t	checklock;
@@ -51,7 +52,7 @@ void		print_text(char *s, char *c, int id, t_data *info);
 void		destroy_mutex(t_data *info);
 long long	get_milisec(void);
 void		*death(void *arg);
-void		self_sleep(int time);
+void		self_sleep(int time, long long start);
 int			ft_malloc(void **ptr, size_t size);
 
 #endif

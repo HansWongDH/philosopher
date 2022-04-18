@@ -6,7 +6,7 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 15:24:02 by wding-ha          #+#    #+#             */
-/*   Updated: 2022/04/17 22:57:23 by wding-ha         ###   ########.fr       */
+/*   Updated: 2022/04/18 13:29:04 by wding-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	eat(t_philo *info)
 		print_text("is eating\n", GREEN, info->id, info->data);
 		info->last_eaten = get_milisec();
 		info->eaten--;
-		self_sleep(info->data->eat);
+		self_sleep(info->data->eat, get_milisec());
 		pthread_mutex_lock(&(info->data->checklock));
 		if (!info->eaten)
 			info->data->done++;
@@ -38,26 +38,25 @@ void	sleeping(t_philo *info)
 	if (info->data->dead == 0)
 	{
 		print_text("is sleeping\n", BLUE, info->id, info->data);
-		self_sleep(info->data->sleep);
+		self_sleep(info->data->sleep, get_milisec());
 	}
 }
 
 void	*action(void *args)
 {
 	t_philo			*info;
-	pthread_mutex_t	sleep;
 
 	info = (t_philo *)args;
-	pthread_mutex_init(&sleep, NULL);
+	while (info->data->start == 0)
+		;
 	print_text("is thinking\n", CYAN, info->id, info->data);
 	if (info->id % 2 == 0 && info->data->dead == 0)
-		self_sleep(info->data->eat / 2);
+		self_sleep(info->data->eat / 2, get_milisec());
 	while (info->eaten > 0 && info->data->dead == 0)
 	{
 		eat(info);
 		sleeping(info);
 	}
-	pthread_mutex_destroy(&sleep);
 	return (NULL);
 }
 
@@ -97,6 +96,7 @@ void	create_thread(t_data *info)
 		pthread_create(&(checker[i]), NULL, &death, (void *)&ph[i]);
 		i++;
 	}
+	info->start = 1;
 	join_thread(&ph, &checker, info->philo);
 	free(ph);
 	free(checker);
