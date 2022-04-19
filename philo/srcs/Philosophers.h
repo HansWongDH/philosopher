@@ -6,7 +6,7 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 16:05:20 by wding-ha          #+#    #+#             */
-/*   Updated: 2022/04/18 13:23:40 by wding-ha         ###   ########.fr       */
+/*   Updated: 2022/04/19 13:23:15 by wding-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,9 +50,9 @@ void		*action(void *args);
 void		create_thread(t_data *info);
 void		print_text(char *s, char *c, int id, t_data *info);
 void		destroy_mutex(t_data *info);
-long long	get_milisec(void);
+long long	get_ms(void);
 void		*death(void *arg);
-void		self_sleep(int time, long long start);
+void		ft_msleep(int time, long long start);
 int			ft_malloc(void **ptr, size_t size);
 
 #endif

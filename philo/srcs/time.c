@@ -6,13 +6,13 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 18:40:54 by wding-ha          #+#    #+#             */
-/*   Updated: 2022/04/18 13:06:54 by wding-ha         ###   ########.fr       */
+/*   Updated: 2022/04/19 13:23:41 by wding-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Philosophers.h"
 
-long long	get_milisec(void)
+long long	get_ms(void)
 {
 	struct timeval	time;
 	long long		milisec;
@@ -24,14 +24,14 @@ long long	get_milisec(void)
 	return (milisec);
 }
 
-void	self_sleep(int time, long long start)
+void	ft_msleep(int time, long long start)
 {
 	long long	cur;
 
 	cur = 0;
 	while (cur < (long long)time)
 	{
-		cur = get_milisec() - start;
+		cur = get_ms() - start;
 		usleep(1);
 	}
 }

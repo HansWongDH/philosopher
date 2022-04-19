@@ -6,13 +6,13 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 15:26:36 by wding-ha          #+#    #+#             */
-/*   Updated: 2022/04/18 13:25:49 by wding-ha         ###   ########.fr       */
+/*   Updated: 2022/04/19 13:21:00 by wding-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Philosophers.h"
 
-int		error(void)
+int	error(void)
 {
 	ft_putstr_fd("Error\n", 2);
 	return (0);
@@ -34,13 +34,11 @@ int	ft_checkdigit(char *str)
 	return (1);
 }
 
-int		input_checking(char **av, int ac)
+int	input_checking(char **av, int ac)
 {
 	int	i;
-	
+
 	i = 1;
-	// if (ft_atoi(av[1]) <= 0)
-	// 	return (error());
 	while (i < ac)
 	{
 		if (ft_atoi(av[i]) <= 0)
