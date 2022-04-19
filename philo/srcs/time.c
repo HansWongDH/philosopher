@@ -6,7 +6,7 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 18:40:54 by wding-ha          #+#    #+#             */
-/*   Updated: 2022/04/19 13:23:41 by wding-ha         ###   ########.fr       */
+/*   Updated: 2022/04/19 13:32:52 by wding-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ long long	get_ms(void)
 
 	gettimeofday(&time, NULL);
 	sec = time.tv_sec;
-	milisec = (sec * 1000) + (time.tv_usec / 1000);
+	milisec = (time.tv_usec / 1000);
 	return (milisec);
 }
 

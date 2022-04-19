@@ -6,7 +6,7 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 15:24:02 by wding-ha          #+#    #+#             */
-/*   Updated: 2022/04/19 13:23:00 by wding-ha         ###   ########.fr       */
+/*   Updated: 2022/04/19 13:27:29 by wding-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	eat(t_philo *info)
 {	
-	if (info->data->dead == 0)
+	if (!info->data->dead)
 	{
 		pthread_mutex_lock(&(info->data->lock[info->rfork]));
 		print_text("has taken a fork\n", YELLOW, info->id, info->data);
@@ -35,7 +35,7 @@ void	eat(t_philo *info)
 
 void	sleeping(t_philo *info)
 {
-	if (info->data->dead == 0)
+	if (!info->data->dead)
 	{
 		print_text("is sleeping\n", BLUE, info->id, info->data);
 		ft_msleep(info->data->sleep, get_ms());
@@ -47,12 +47,12 @@ void	*action(void *args)
 	t_philo			*info;
 
 	info = (t_philo *)args;
-	while (info->data->start == 0)
+	while (!info->data->start)
 		usleep(1);
 	print_text("is thinking\n", CYAN, info->id, info->data);
-	if (info->id % 2 == 0 && info->data->dead == 0)
+	if (info->id % 2 == 0 && !info->data->dead)
 		ft_msleep(info->data->eat / 2, get_ms());
-	while (info->eaten > 0 && info->data->dead == 0)
+	while (info->eaten > 0 && !info->data->dead)
 	{
 		eat(info);
 		sleeping(info);
