@@ -6,7 +6,7 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 19:48:57 by wding-ha          #+#    #+#             */
-/*   Updated: 2022/04/19 13:50:16 by wding-ha         ###   ########.fr       */
+/*   Updated: 2022/04/19 18:16:58 by wding-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	*death(void *arg)
 	{
 		cur = get_ms();
 		diff = cur - info[i].last_eaten;
-		if (diff > (info[i].data->death) && !info[i].data->dead)
+		if (diff > info->data->death && !info[i].data->dead)
 		{
 			info[i].data->dead = 1;
 			printf("%s%lld\tPhilosopher %d\tdied\n", RED, get_ms(), info[i].id);
