@@ -6,7 +6,7 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 18:40:54 by wding-ha          #+#    #+#             */
-/*   Updated: 2022/04/19 13:50:01 by wding-ha         ###   ########.fr       */
+/*   Updated: 2022/04/20 18:26:39 by wding-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ long long	get_ms(void)
 {
 	struct timeval	time;
 	long long		milisec;
+	long long		sec;
 
 	gettimeofday(&time, NULL);
 	sec = time.tv_sec;

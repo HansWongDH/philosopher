@@ -6,13 +6,13 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 21:25:15 by wding-ha          #+#    #+#             */
-/*   Updated: 2022/04/20 15:31:16 by wding-ha         ###   ########.fr       */
+/*   Updated: 2022/04/20 18:54:00 by wding-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Philosophers.h"
 
-sem_t *ft_sem_create(int i)
+sem_t	*ft_sem_create(int i)
 {
 	char	*str;
 	sem_t	*sem;
@@ -26,13 +26,12 @@ sem_t *ft_sem_create(int i)
 void	fork_creation(t_data *info)
 {
 	t_philo		*ph;
-	pthread_t	checker;
 	int			i;
 
 	i = 0;
+	ph = malloc(sizeof(t_philo) * info->philo);
 	while (i < info->philo)
 	{
-		ph[i].id = i;
 		ph[i].id = i;
 		ph[i].data = info;
 		ph[i].rfork = ft_itoa(i);
@@ -42,5 +41,12 @@ void	fork_creation(t_data *info)
 		ph[i].pid = fork();
 		i++;
 	}
-	info->start = 1;
+	i = 0;
+	while (i < info->philo)
+	{
+		if (ph[i].pid == 0)
+			printf("id %d pid %d, rfork %s, lfork%s\n", ph[i].id, ph[i].pid, ph[i].rfork, ph[i].lfork);
+		i++;
+	}
+	free(ph);
 }

@@ -6,7 +6,7 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 16:05:20 by wding-ha          #+#    #+#             */
-/*   Updated: 2022/04/20 15:29:48 by wding-ha         ###   ########.fr       */
+/*   Updated: 2022/04/20 18:23:56 by wding-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,12 +47,9 @@ typedef struct s_philo {
 
 int			input_checking(char **av, int ac);
 void		build_info(t_data *info, char **argv, int argc);
-void		*action(void *args);
-void		create_thread(t_data *info);
+void		fork_creation(t_data *info);
 void		print_text(char *s, char *c, int id, t_data *info);
-void		destroy_mutex(t_data *info);
 long long	get_ms(void);
-void		*death(void *arg);
 void		ft_msleep(int time, long long start);
 int			ft_malloc(void **ptr, size_t size);
 
