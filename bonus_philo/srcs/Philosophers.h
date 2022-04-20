@@ -6,7 +6,7 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 16:05:20 by wding-ha          #+#    #+#             */
-/*   Updated: 2022/04/19 22:33:46 by wding-ha         ###   ########.fr       */
+/*   Updated: 2022/04/20 15:29:48 by wding-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <sys/time.h>
 # include <sys/stat.h>
 # include <sys/types.h>
+# include <semaphore.h>
 # include <fcntl.h>
 # include "libft.h"
 # include "color.h"
@@ -35,10 +36,10 @@ typedef struct s_data {
 }				t_data;
 
 typedef struct s_philo {
-	pthread_t		thread;
+	int				pid;
 	int				id;
-	int				rfork;
-	int				lfork;
+	char			*rfork;
+	char			*lfork;
 	long long		last_eaten;
 	int				eaten;
 	t_data			*data;

@@ -6,7 +6,7 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 19:48:57 by wding-ha          #+#    #+#             */
-/*   Updated: 2022/04/19 18:16:58 by wding-ha         ###   ########.fr       */
+/*   Updated: 2022/04/20 14:52:17 by wding-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,19 +21,20 @@ void	*death(void *arg)
 
 	info = arg;
 	i = 0;
-	while (info->data->done != info->data->philo && info->data->dead == 0)
+	while (info->data->done != info->data->philo && !info->data->dead)
 	{
 		cur = get_ms();
 		diff = cur - info[i].last_eaten;
-		if (diff > info->data->death && !info[i].data->dead)
+		if (diff > info->data->death && !info->data->dead)
 		{
-			info[i].data->dead = 1;
+			info->data->dead = 1;
 			printf("%s%lld\tPhilosopher %d\tdied\n", RED, get_ms(), info[i].id);
-			exit(1);
+			return (NULL);
 		}
 		i++;
 		if (i == info->data->philo)
 			i = 0;
+		usleep(info->data->death);
 	}
 	return (NULL);
 }

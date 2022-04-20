@@ -6,7 +6,7 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 15:24:02 by wding-ha          #+#    #+#             */
-/*   Updated: 2022/04/19 13:27:29 by wding-ha         ###   ########.fr       */
+/*   Updated: 2022/04/20 14:51:25 by wding-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,11 +48,11 @@ void	*action(void *args)
 
 	info = (t_philo *)args;
 	while (!info->data->start)
-		usleep(1);
+		usleep(info->data->philo);
 	print_text("is thinking\n", CYAN, info->id, info->data);
 	if (info->id % 2 == 0 && !info->data->dead)
 		ft_msleep(info->data->eat / 2, get_ms());
-	while (info->eaten > 0 && !info->data->dead)
+	while (info->eaten > 0 && !info->data->dead && info->data->philo > 1)
 	{
 		eat(info);
 		sleeping(info);

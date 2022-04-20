@@ -6,7 +6,7 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 16:05:20 by wding-ha          #+#    #+#             */
-/*   Updated: 2022/04/19 13:23:15 by wding-ha         ###   ########.fr       */
+/*   Updated: 2022/04/20 12:03:26 by wding-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include <stdio.h>
+# include <limits.h>
 # include <sys/time.h>
 # include "libft.h"
 # include "color.h"
