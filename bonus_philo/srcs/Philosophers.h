@@ -6,7 +6,7 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 16:05:20 by wding-ha          #+#    #+#             */
-/*   Updated: 2022/04/21 16:10:49 by wding-ha         ###   ########.fr       */
+/*   Updated: 2022/04/21 18:18:27 by wding-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ typedef struct s_data {
 	int				timeleft;		
 	int				dead;
 	int				done;
+	pid_t			main;
 	pid_t			*pid;
 	sem_t			**sem;
 	sem_t			*start;
@@ -55,5 +56,7 @@ long long	get_ms(void);
 void		ft_msleep(int time, long long start);
 int			ft_malloc(void **ptr, size_t size);
 sem_t		*ft_sem_create(int i);
+void		sem_kill(t_data *info);
+void		wait_for_my_child(t_data info);
 
 #endif

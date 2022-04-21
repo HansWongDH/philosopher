@@ -6,7 +6,7 @@
 #    By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/12 18:02:33 by wding-ha          #+#    #+#              #
-#    Updated: 2022/04/20 18:26:20 by wding-ha         ###   ########.fr        #
+#    Updated: 2022/04/21 17:58:26 by wding-ha         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,6 @@
 ###########
 
 NAME			= philo
-B_NAME			= philo_bonus
 
 #######
 #FLAGS#
@@ -39,7 +38,7 @@ SRC_DIR			= srcs/
 ##############
 
 S_SRCS			= $(SRC_DIR)main.c $(SRC_DIR)fork_create.c $(SRC_DIR)build_info.c $(SRC_DIR)print_function.c\
-				$(SRC_DIR)time.c
+				$(SRC_DIR)time.c $(SRC_DIR)sem_utils.c
 
 OBJS			= $(S_SRCS:.c=.o)
 

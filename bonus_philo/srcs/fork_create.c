@@ -6,7 +6,7 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 21:25:15 by wding-ha          #+#    #+#             */
-/*   Updated: 2022/04/21 16:11:55 by wding-ha         ###   ########.fr       */
+/*   Updated: 2022/04/21 18:04:00 by wding-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,17 +53,6 @@ int	action(t_philo	*info)
 		sleeping(info);
 	}
 	exit(1);
-}
-
-sem_t	*ft_sem_create(int i)
-{
-	char	*str;
-	sem_t	*sem;
-
-	str = ft_itoa(i);
-	sem = sem_open(str, O_CREAT, 0664, 1);
-	free(str);
-	return (sem);
 }
 
 int	fork_creation(t_data *info)
