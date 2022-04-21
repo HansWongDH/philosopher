@@ -6,7 +6,7 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 16:05:20 by wding-ha          #+#    #+#             */
-/*   Updated: 2022/04/20 18:23:56 by wding-ha         ###   ########.fr       */
+/*   Updated: 2022/04/21 16:10:49 by wding-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,14 +32,16 @@ typedef struct s_data {
 	int				timeleft;		
 	int				dead;
 	int				done;
-	int				start;
+	pid_t			*pid;
+	sem_t			**sem;
+	sem_t			*start;
 }				t_data;
 
 typedef struct s_philo {
 	int				pid;
 	int				id;
-	char			*rfork;
-	char			*lfork;
+	int				rfork;
+	int				lfork;
 	long long		last_eaten;
 	int				eaten;
 	t_data			*data;
@@ -47,10 +49,11 @@ typedef struct s_philo {
 
 int			input_checking(char **av, int ac);
 void		build_info(t_data *info, char **argv, int argc);
-void		fork_creation(t_data *info);
+int			fork_creation(t_data *info);
 void		print_text(char *s, char *c, int id, t_data *info);
 long long	get_ms(void);
 void		ft_msleep(int time, long long start);
 int			ft_malloc(void **ptr, size_t size);
+sem_t		*ft_sem_create(int i);
 
 #endif

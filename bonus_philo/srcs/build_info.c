@@ -6,7 +6,7 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 15:26:36 by wding-ha          #+#    #+#             */
-/*   Updated: 2022/04/19 14:00:36 by wding-ha         ###   ########.fr       */
+/*   Updated: 2022/04/21 16:11:02 by wding-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,4 +68,6 @@ void	build_info(t_data *info, char **argv, int argc)
 	}
 	else
 		info->timeleft = 9999999;
+	info->start = sem_open("start", O_CREAT, 0664, 0);
+	info->pid = malloc(sizeof(pid_t) * info->philo);
 }

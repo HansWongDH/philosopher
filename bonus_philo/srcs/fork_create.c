@@ -6,11 +6,54 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 21:25:15 by wding-ha          #+#    #+#             */
-/*   Updated: 2022/04/20 18:54:00 by wding-ha         ###   ########.fr       */
+/*   Updated: 2022/04/21 16:11:55 by wding-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Philosophers.h"
+
+void	eat(t_philo *info)
+{	
+	if (!info->data->dead)
+	{
+		sem_wait(info->data->sem[info->rfork]);
+		print_text("has taken a fork\n", YELLOW, info->id, info->data);
+		sem_wait(info->data->sem[info->lfork]);
+		print_text("has taken a fork\n", YELLOW, info->id, info->data);
+		print_text("is eating\n", GREEN, info->id, info->data);
+		info->last_eaten = get_ms();
+		info->eaten--;
+		ft_msleep(info->data->eat, get_ms());
+		if (!info->eaten)
+			info->data->done++;
+		sem_post(info->data->sem[info->rfork]);
+		sem_post(info->data->sem[info->lfork]);
+	}
+}
+
+void	sleeping(t_philo *info)
+{
+	if (!info->data->dead)
+	{
+		print_text("is sleeping\n", BLUE, info->id, info->data);
+		ft_msleep(info->data->sleep, get_ms());
+	}
+}
+
+int	action(t_philo	*info)
+{
+	sem_wait(info->data->start);
+	print_text("is thinking\n", CYAN, info->id, info->data);
+	sem_post(info->data->start);
+	if (info->id % 2 == 0 && !info->data->dead)
+		ft_msleep(info->data->eat / 2, get_ms());
+	while (info->eaten > 0 && !info->data->dead && info->data->philo > 1)
+	{
+		eat(info);
+		sleeping(info);
+	}
+	exit(1);
+}
 
 sem_t	*ft_sem_create(int i)
 {
@@ -19,34 +62,29 @@ sem_t	*ft_sem_create(int i)
 
 	str = ft_itoa(i);
 	sem = sem_open(str, O_CREAT, 0664, 1);
+	free(str);
 	return (sem);
 }
 
-
-void	fork_creation(t_data *info)
+int	fork_creation(t_data *info)
 {
-	t_philo		*ph;
+	t_philo		ph;
 	int			i;
 
 	i = 0;
-	ph = malloc(sizeof(t_philo) * info->philo);
 	while (i < info->philo)
 	{
-		ph[i].id = i;
-		ph[i].data = info;
-		ph[i].rfork = ft_itoa(i);
-		ph[i].lfork = ft_itoa((i + 1) % info->philo);
-		ph[i].last_eaten = get_ms();
-		ph[i].eaten = info->timeleft;
-		ph[i].pid = fork();
+		ph.id = i;
+		ph.data = info;
+		ph.rfork = i;
+		ph.lfork = (i + 1) % info->philo;
+		ph.last_eaten = get_ms();
+		ph.eaten = info->timeleft;
+		info->pid[i] = fork();
+		if (info->pid[i] == 0)
+			return (action(&ph));
 		i++;
 	}
-	i = 0;
-	while (i < info->philo)
-	{
-		if (ph[i].pid == 0)
-			printf("id %d pid %d, rfork %s, lfork%s\n", ph[i].id, ph[i].pid, ph[i].rfork, ph[i].lfork);
-		i++;
-	}
-	free(ph);
+	sem_post(info->start);
+	return (0);
 }
