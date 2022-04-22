@@ -6,7 +6,7 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 21:25:15 by wding-ha          #+#    #+#             */
-/*   Updated: 2022/04/22 22:32:31 by wding-ha         ###   ########.fr       */
+/*   Updated: 2022/04/22 22:51:58 by wding-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@ void	eat(t_philo *info)
 	ft_msleep(info->data->eat, get_ms());
 	if (!info->eaten)
 		sem_post(info->data->done);
-	sem_post(info->data->sem[info->rfork]);
 	sem_post(info->data->sem[info->lfork]);
+	sem_post(info->data->sem[info->rfork]);
 }
 
 void	sleeping(t_philo *info)
