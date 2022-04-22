@@ -6,7 +6,7 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/21 17:55:57 by wding-ha          #+#    #+#             */
-/*   Updated: 2022/04/21 18:20:15 by wding-ha         ###   ########.fr       */
+/*   Updated: 2022/04/22 17:32:00 by wding-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,29 +16,33 @@ void	sem_kill(t_data *info)
 {
 	int		i;
 	char	*str;
+	char	*m;
 
 	i = 0;
 	while (i < info->philo)
 	{
 		str = ft_itoa(i);
+		m = ft_strjoin(str, "d");
 		sem_unlink(str);
+		sem_unlink(m);
 		sem_close(info->sem[i]);
+		sem_close(info->monitor[i]);
 		free(str);
+		free(m);
 		i++;
 	}
 	sem_unlink("start");
+	sem_unlink("done");
 	sem_close(info->start);
+	sem_close(info->done);
 	free(info->sem);
 }
 
-sem_t	*ft_sem_create(int i)
+sem_t	*ft_sem_create(char *s, int i)
 {
-	char	*str;
 	sem_t	*sem;
 
-	str = ft_itoa(i);
-	sem = sem_open(str, O_CREAT, 0664, 1);
-	free(str);
+	sem = sem_open(s, O_CREAT, 0664, i);
 	return (sem);
 }
 

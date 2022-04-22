@@ -6,7 +6,7 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 13:51:19 by wding-ha          #+#    #+#             */
-/*   Updated: 2022/04/21 17:59:10 by wding-ha         ###   ########.fr       */
+/*   Updated: 2022/04/22 15:16:33 by wding-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 int	main(int argc, char **argv)
 {
 	t_data		info;
+	pthread_t	monitor;
 
 	if (argc != 5 && argc != 6)
 		return (0);
@@ -23,7 +24,11 @@ int	main(int argc, char **argv)
 	build_info(&info, argv, argc);
 	fork_creation(&info);
 	if (getpid() > 0)
+	{
+		pthread_create(&monitor, NULL, &death, &info);
+		pthread_join(monitor, NULL);
 		wait_for_my_child(info);
+	}
 	sem_kill(&info);
 	exit(1);
 }

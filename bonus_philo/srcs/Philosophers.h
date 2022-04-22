@@ -6,7 +6,7 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 16:05:20 by wding-ha          #+#    #+#             */
-/*   Updated: 2022/04/21 18:18:27 by wding-ha         ###   ########.fr       */
+/*   Updated: 2022/04/22 17:22:53 by wding-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,9 @@
 # include <sys/time.h>
 # include <sys/stat.h>
 # include <sys/types.h>
+# include <sys/wait.h>
 # include <semaphore.h>
+# include <signal.h>
 # include <fcntl.h>
 # include "libft.h"
 # include "color.h"
@@ -30,11 +32,13 @@ typedef struct s_data {
 	int				eat;
 	int				sleep;
 	int				timeleft;		
+	long long		*last_eaten;
 	int				dead;
-	int				done;
+	sem_t			*done;
 	pid_t			main;
 	pid_t			*pid;
 	sem_t			**sem;
+	sem_t			**monitor;
 	sem_t			*start;
 }				t_data;
 
@@ -43,7 +47,6 @@ typedef struct s_philo {
 	int				id;
 	int				rfork;
 	int				lfork;
-	long long		last_eaten;
 	int				eaten;
 	t_data			*data;
 }				t_philo;
@@ -55,8 +58,9 @@ void		print_text(char *s, char *c, int id, t_data *info);
 long long	get_ms(void);
 void		ft_msleep(int time, long long start);
 int			ft_malloc(void **ptr, size_t size);
-sem_t		*ft_sem_create(int i);
+sem_t		*ft_sem_create(char *str, int i);
 void		sem_kill(t_data *info);
 void		wait_for_my_child(t_data info);
+void		*death(void *arg);
 
 #endif

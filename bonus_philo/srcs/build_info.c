@@ -6,7 +6,7 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 15:26:36 by wding-ha          #+#    #+#             */
-/*   Updated: 2022/04/21 18:20:19 by wding-ha         ###   ########.fr       */
+/*   Updated: 2022/04/22 17:22:43 by wding-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,13 +52,21 @@ int	input_checking(char **av, int ac)
 
 void	sem_generate(t_data *info)
 {
-	int	i;
+	int		i;
+	char	*str;
+	char	*d;
 
 	i = 0;
 	info->sem = malloc(sizeof(sem_t *) * info->philo);
+	info->monitor = malloc(sizeof(sem_t *) * info->philo);
 	while (i < info->philo)
 	{
-		info->sem[i] = ft_sem_create(i);
+		str = ft_itoa(i);
+		d = ft_strjoin(str, "d");
+		info->sem[i] = ft_sem_create(str, 1);
+		info->monitor[i] = ft_sem_create(d, 0);
+		free(str);
+		free(d);
 		i++;
 	}
 }
@@ -82,6 +90,8 @@ void	build_info(t_data *info, char **argv, int argc)
 	else
 		info->timeleft = 9999999;
 	info->start = sem_open("start", O_CREAT, 0664, 0);
+	info->done = sem_open("done", O_CREAT, 0664, 0);
 	info->pid = malloc(sizeof(pid_t) * info->philo);
+	info->last_eaten = malloc(sizeof(long long) * info->philo);
 	sem_generate(info);
 }
