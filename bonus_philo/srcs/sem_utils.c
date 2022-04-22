@@ -6,7 +6,7 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/21 17:55:57 by wding-ha          #+#    #+#             */
-/*   Updated: 2022/04/22 23:06:55 by wding-ha         ###   ########.fr       */
+/*   Updated: 2022/04/22 23:16:32 by wding-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	sem_unchain(t_data *info)
 void	sem_kill(t_data *info)
 {
 	int		i;
-	
+
 	i = 0;
 	sem_unchain(info);
 	while (i < info->philo)
