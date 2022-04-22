@@ -6,12 +6,16 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 21:25:15 by wding-ha          #+#    #+#             */
-/*   Updated: 2022/04/22 21:40:21 by wding-ha         ###   ########.fr       */
+/*   Updated: 2022/04/22 22:32:31 by wding-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Philosophers.h"
 
+/*
+	1.sem_post monitor semaphore is to trigger 
+	the refresh of last_eaten time on main process
+*/
 void	eat(t_philo *info)
 {	
 	sem_wait(info->data->sem[info->rfork]);
@@ -34,6 +38,13 @@ void	sleeping(t_philo *info)
 	ft_msleep(info->data->sleep, get_ms());
 }
 
+/*
+	1. sem_t start started as 0, hence all process 
+	will be waiting until the switch is flipped
+	2. after that, it will flip its corresponding 
+	monitor sem_t to refresh the last_eaten time;
+	3. even number id will get delayed for half of eating time
+*/
 int	action(t_philo	*info)
 {
 	sem_wait(info->data->start);
@@ -62,6 +73,18 @@ void	get_eaten_time(t_data *info)
 	}
 }
 
+/*
+	1. the creation of philo as a child process;
+	2. Since they duplicate the value, instead of array of struct like mandatory,
+	I used 1 struct and update its value before the forking process;
+	3. I also store pid of child process 
+	into an array in the main struct t_data;
+	4. Last_eaten time will get initialized once the 
+	creation of child process is finished
+	5. In order to synchronize their starting time, 
+	they will lie dormant until sem_t start turn into 1
+	which happen after the creation of last child process;
+*/
 int	fork_creation(t_data *info)
 {
 	t_philo		ph;

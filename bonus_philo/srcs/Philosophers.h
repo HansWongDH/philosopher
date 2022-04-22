@@ -6,7 +6,7 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 16:05:20 by wding-ha          #+#    #+#             */
-/*   Updated: 2022/04/22 21:41:38 by wding-ha         ###   ########.fr       */
+/*   Updated: 2022/04/22 22:06:05 by wding-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include <sys/wait.h>
 # include <semaphore.h>
 # include <signal.h>
+# include <limits.h>
 # include <fcntl.h>
 # include "libft.h"
 # include "color.h"

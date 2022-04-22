@@ -6,7 +6,7 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 15:26:36 by wding-ha          #+#    #+#             */
-/*   Updated: 2022/04/22 21:10:35 by wding-ha         ###   ########.fr       */
+/*   Updated: 2022/04/22 22:09:48 by wding-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,13 @@ int	ft_checkdigit(char *str)
 	return (1);
 }
 
+/*
+	1. Error handling function that filtered out
+	non-digit, negative number, weird cases like 12-
+	2. my ft_atoi behave like real atoi, return 0 or -1
+	on number that exceed INT_MIN and INT_MAX which will get
+	filtered out as well;
+*/
 int	input_checking(char **av, int ac)
 {
 	int	i;
@@ -50,6 +57,10 @@ int	input_checking(char **av, int ac)
 	return (1);
 }
 
+/*
+	1. Generate 2 set of array of semaphore, 1 represent fork,
+	the other one use to communicate with death_checker 
+*/
 void	sem_generate(t_data *info)
 {
 	int		i;
@@ -71,6 +82,13 @@ void	sem_generate(t_data *info)
 	}
 }
 
+/*
+	1. Initialize struct, transform input into struct for philo generation;
+	2. Creation of multiple semaphore that shared among process;
+	3. start - synchronize the starting of process
+	4. done - keep track on how many philo have done with their eating
+	5. print - semaphore for printing messages so it won't jumble up
+*/
 void	build_info(t_data *info, char **argv, int argc)
 {
 	info->philo = ft_atoi(argv[1]);
@@ -86,7 +104,7 @@ void	build_info(t_data *info, char **argv, int argc)
 			info->timeleft = 1;
 	}
 	else
-		info->timeleft = 9999999;
+		info->timeleft = INT_MAX;
 	info->start = sem_open("start", O_CREAT, 0664, 0);
 	info->done = sem_open("done", O_CREAT, 0664, 0);
 	info->print = sem_open("print", O_CREAT, 0664, 1);
