@@ -6,7 +6,7 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 19:48:57 by wding-ha          #+#    #+#             */
-/*   Updated: 2022/04/22 22:32:01 by wding-ha         ###   ########.fr       */
+/*   Updated: 2022/04/22 23:15:49 by wding-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,10 @@
 */
 void	death_updating(t_data *info, int i)
 {
-	if (info->monitor[i]->__align == 1)
+	if (info->monitor[i]->__align >= 1)
 	{
 		info->last_eaten[i] = get_ms();
-		sem_wait(info->monitor[i]);
+		info->monitor[i]->__align = 0;
 	}
 }
 

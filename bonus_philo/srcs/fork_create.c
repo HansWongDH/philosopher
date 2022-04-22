@@ -6,7 +6,7 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 21:25:15 by wding-ha          #+#    #+#             */
-/*   Updated: 2022/04/22 22:51:58 by wding-ha         ###   ########.fr       */
+/*   Updated: 2022/04/22 23:13:01 by wding-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,11 +48,13 @@ void	sleeping(t_philo *info)
 int	action(t_philo	*info)
 {
 	sem_wait(info->data->start);
-	sem_post(info->data->monitor[info->id]);
 	print_text("is thinking\n", CYAN, info->id, info->data);
 	sem_post(info->data->start);
 	if (info->id % 2 == 0)
+	{
+		sem_post(info->data->monitor[info->id]);
 		usleep(info->data->eat * 500);
+	}
 	while (info->eaten > 0 && info->data->philo > 1)
 	{
 		eat(info);

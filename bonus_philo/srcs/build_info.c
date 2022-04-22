@@ -6,7 +6,7 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 15:26:36 by wding-ha          #+#    #+#             */
-/*   Updated: 2022/04/22 22:09:48 by wding-ha         ###   ########.fr       */
+/*   Updated: 2022/04/22 23:06:00 by wding-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,7 @@ void	sem_generate(t_data *info)
 void	build_info(t_data *info, char **argv, int argc)
 {
 	info->philo = ft_atoi(argv[1]);
+	sem_unchain(info);
 	info->death = ft_atoi(argv[2]);
 	info->eat = ft_atoi(argv[3]);
 	info->sleep = ft_atoi(argv[4]);

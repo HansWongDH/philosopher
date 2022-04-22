@@ -6,7 +6,7 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 16:05:20 by wding-ha          #+#    #+#             */
-/*   Updated: 2022/04/22 22:06:05 by wding-ha         ###   ########.fr       */
+/*   Updated: 2022/04/22 23:05:21 by wding-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,5 +65,6 @@ void		wait_for_my_child(t_data info);
 void		*death(void *arg);
 void		freestruct(t_data *info);
 int			error(void);
+void		sem_unchain(t_data *info);
 
 #endif
