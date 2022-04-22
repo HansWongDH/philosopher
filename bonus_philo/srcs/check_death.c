@@ -6,7 +6,7 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 19:48:57 by wding-ha          #+#    #+#             */
-/*   Updated: 2022/04/22 17:41:05 by wding-ha         ###   ########.fr       */
+/*   Updated: 2022/04/22 21:39:21 by wding-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,10 @@ void	kill_child(t_data *info)
 	int	i;
 
 	i = 0;
+	info->dead = 1;
 	while (i < info->philo)
 	{
-		kill(info->pid[i], SIGKILL);
+		kill(info->pid[i], SIGTERM);
 		i++;
 	}
 }
@@ -49,15 +50,14 @@ void	*death(void *arg)
 		diff = cur - info->last_eaten[i];
 		if (diff > info->death && !info->dead)
 		{
-			info->dead = 1;
-			printf("%s%lld\tPhilosopher %d\tdied\n", RED, get_ms(), i);
 			kill_child(info);
+			printf("%s%lld\tPhilosopher %d\tdied\n", RED, get_ms(), i);
 			return (NULL);
 		}
 		i++;
 		if (i == info->philo)
 			i = 0;
-		usleep(info->philo * 10);
+		usleep(info->death);
 	}
 	return (NULL);
 }

@@ -6,7 +6,7 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 16:05:20 by wding-ha          #+#    #+#             */
-/*   Updated: 2022/04/22 17:22:53 by wding-ha         ###   ########.fr       */
+/*   Updated: 2022/04/22 21:41:38 by wding-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,12 +34,12 @@ typedef struct s_data {
 	int				timeleft;		
 	long long		*last_eaten;
 	int				dead;
-	sem_t			*done;
-	pid_t			main;
 	pid_t			*pid;
 	sem_t			**sem;
 	sem_t			**monitor;
+	sem_t			*print;
 	sem_t			*start;
+	sem_t			*done;
 }				t_data;
 
 typedef struct s_philo {
@@ -62,5 +62,7 @@ sem_t		*ft_sem_create(char *str, int i);
 void		sem_kill(t_data *info);
 void		wait_for_my_child(t_data info);
 void		*death(void *arg);
+void		freestruct(t_data *info);
+int			error(void);
 
 #endif

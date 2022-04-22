@@ -6,7 +6,7 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 18:40:54 by wding-ha          #+#    #+#             */
-/*   Updated: 2022/04/22 17:40:30 by wding-ha         ###   ########.fr       */
+/*   Updated: 2022/04/22 21:22:23 by wding-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,6 @@ void	ft_msleep(int time, long long start)
 	while (cur < (long long)time)
 	{
 		cur = get_ms() - start;
-		usleep(1);
+		usleep(200);
 	}
 }

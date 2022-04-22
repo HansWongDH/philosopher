@@ -6,11 +6,19 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/21 17:55:57 by wding-ha          #+#    #+#             */
-/*   Updated: 2022/04/22 17:32:00 by wding-ha         ###   ########.fr       */
+/*   Updated: 2022/04/22 21:41:27 by wding-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Philosophers.h"
+
+void	freestruct(t_data *info)
+{
+	if (info->pid)
+		free(info->pid);
+	if (info->last_eaten)
+		free(info->last_eaten);
+}
 
 void	sem_kill(t_data *info)
 {
@@ -33,9 +41,12 @@ void	sem_kill(t_data *info)
 	}
 	sem_unlink("start");
 	sem_unlink("done");
+	sem_unlink("print");
 	sem_close(info->start);
 	sem_close(info->done);
+	sem_close(info->print);
 	free(info->sem);
+	free(info->monitor);
 }
 
 sem_t	*ft_sem_create(char *s, int i)

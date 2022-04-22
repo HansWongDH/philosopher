@@ -6,7 +6,7 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 15:26:36 by wding-ha          #+#    #+#             */
-/*   Updated: 2022/04/22 17:22:43 by wding-ha         ###   ########.fr       */
+/*   Updated: 2022/04/22 21:10:35 by wding-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,8 +78,6 @@ void	build_info(t_data *info, char **argv, int argc)
 	info->eat = ft_atoi(argv[3]);
 	info->sleep = ft_atoi(argv[4]);
 	info->dead = 0;
-	info->done = 0;
-	info->main = getpid();
 	if (argc == 6)
 	{
 		if (ft_atoi(argv[5]) > 0)
@@ -91,6 +89,7 @@ void	build_info(t_data *info, char **argv, int argc)
 		info->timeleft = 9999999;
 	info->start = sem_open("start", O_CREAT, 0664, 0);
 	info->done = sem_open("done", O_CREAT, 0664, 0);
+	info->print = sem_open("print", O_CREAT, 0664, 1);
 	info->pid = malloc(sizeof(pid_t) * info->philo);
 	info->last_eaten = malloc(sizeof(long long) * info->philo);
 	sem_generate(info);

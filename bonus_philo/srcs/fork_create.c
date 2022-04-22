@@ -6,7 +6,7 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 21:25:15 by wding-ha          #+#    #+#             */
-/*   Updated: 2022/04/22 17:39:45 by wding-ha         ###   ########.fr       */
+/*   Updated: 2022/04/22 21:40:21 by wding-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,16 +37,29 @@ void	sleeping(t_philo *info)
 int	action(t_philo	*info)
 {
 	sem_wait(info->data->start);
+	sem_post(info->data->monitor[info->id]);
 	print_text("is thinking\n", CYAN, info->id, info->data);
 	sem_post(info->data->start);
 	if (info->id % 2 == 0)
-		ft_msleep(info->data->eat / 2, get_ms());
+		usleep(info->data->eat * 500);
 	while (info->eaten > 0 && info->data->philo > 1)
 	{
 		eat(info);
 		sleeping(info);
 	}
 	exit(1);
+}
+
+void	get_eaten_time(t_data *info)
+{
+	int	i;
+
+	i = 0;
+	while (i < info->philo)
+	{
+		info->last_eaten[i] = get_ms();
+		i++;
+	}
 }
 
 int	fork_creation(t_data *info)
@@ -63,11 +76,11 @@ int	fork_creation(t_data *info)
 		ph.lfork = (i + 1) % info->philo;
 		ph.eaten = info->timeleft;
 		info->pid[i] = fork();
-		info->last_eaten[i] = get_ms();
 		if (info->pid[i] == 0)
 			return (action(&ph));
 		i++;
 	}
+	get_eaten_time(info);
 	sem_post(info->start);
 	return (0);
 }
