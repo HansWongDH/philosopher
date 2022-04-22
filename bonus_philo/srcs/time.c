@@ -6,7 +6,7 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 18:40:54 by wding-ha          #+#    #+#             */
-/*   Updated: 2022/04/20 18:26:39 by wding-ha         ###   ########.fr       */
+/*   Updated: 2022/04/22 17:40:30 by wding-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ long long	get_ms(void)
 	milisec = (sec * 1000) + (time.tv_usec / 1000);
 	return (milisec);
 }
-
 
 void	ft_msleep(int time, long long start)
 {
