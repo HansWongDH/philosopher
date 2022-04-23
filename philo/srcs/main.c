@@ -6,7 +6,7 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 16:50:04 by wding-ha          #+#    #+#             */
-/*   Updated: 2022/04/22 21:19:48 by wding-ha         ###   ########.fr       */
+/*   Updated: 2022/04/23 22:06:42 by wding-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	main(int argc, char **argv)
 	int			i;
 
 	if (argc != 5 && argc != 6)
-		return (error());
+		return (error(0));
 	if (!input_checking(argv, argc))
 		return (0);
 	build_info(&info, argv, argc);

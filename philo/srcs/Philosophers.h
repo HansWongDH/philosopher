@@ -6,7 +6,7 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 16:05:20 by wding-ha          #+#    #+#             */
-/*   Updated: 2022/04/22 21:19:34 by wding-ha         ###   ########.fr       */
+/*   Updated: 2022/04/23 22:05:46 by wding-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,6 @@ long long	get_ms(void);
 void		*death(void *arg);
 void		ft_msleep(int time, long long start);
 int			ft_malloc(void **ptr, size_t size);
-int			error(void);
+int			error(int i);
 
 #endif

@@ -6,15 +6,20 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 15:26:36 by wding-ha          #+#    #+#             */
-/*   Updated: 2022/04/20 12:03:46 by wding-ha         ###   ########.fr       */
+/*   Updated: 2022/04/23 22:10:44 by wding-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Philosophers.h"
 
-int	error(void)
+int	error(int i)
 {
-	ft_putstr_fd("Error\n", 2);
+	if (i == 0)
+		ft_putstr_fd("Error: Invalid number of argument\n", 2);
+	if (i == 1)
+		ft_putstr_fd("Error: Invalid number\n", 2);
+	if (i == 2)
+		ft_putstr_fd("Error: Input is not a number\n", 2);
 	return (0);
 }
 
@@ -41,10 +46,10 @@ int	input_checking(char **av, int ac)
 	i = 1;
 	while (i < ac)
 	{
-		if (ft_atoi(av[i]) <= 0)
-			return (error());
 		if (!ft_checkdigit(av[i]))
-			return (error());
+			return (error(2));
+		if (ft_atoi(av[i]) <= 0)
+			return (error(1));
 		i++;
 	}
 	return (1);

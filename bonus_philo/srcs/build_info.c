@@ -6,15 +6,20 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 15:26:36 by wding-ha          #+#    #+#             */
-/*   Updated: 2022/04/22 23:06:00 by wding-ha         ###   ########.fr       */
+/*   Updated: 2022/04/23 22:08:26 by wding-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Philosophers.h"
 
-int	error(void)
+int	error(int i)
 {
-	ft_putstr_fd("Error\n", 2);
+	if (i == 0)
+		ft_putstr_fd("Error: Invalid number of argument\n", 2);
+	if (i == 1)
+		ft_putstr_fd("Error: Invalid number\n", 2);
+	if (i == 2)
+		ft_putstr_fd("Error: Input is not a number\n", 2);
 	return (0);
 }
 
@@ -48,10 +53,10 @@ int	input_checking(char **av, int ac)
 	i = 1;
 	while (i < ac)
 	{
-		if (ft_atoi(av[i]) <= 0)
-			return (error());
 		if (!ft_checkdigit(av[i]))
-			return (error());
+			return (error(2));
+		if (ft_atoi(av[i]) <= 0)
+			return (error(1));
 		i++;
 	}
 	return (1);
@@ -68,8 +73,10 @@ void	sem_generate(t_data *info)
 	char	*d;
 
 	i = 0;
-	info->sem = malloc(sizeof(sem_t *) * info->philo);
-	info->monitor = malloc(sizeof(sem_t *) * info->philo);
+	if (!ft_malloc((void *)&(info->sem), sizeof(sem_t *) * info->philo))
+		return (freestruct(info));
+	if (!ft_malloc((void *)&(info->monitor), sizeof(sem_t *) * info->philo))
+		return (freestruct(info));
 	while (i < info->philo)
 	{
 		str = ft_itoa(i);
@@ -91,6 +98,7 @@ void	sem_generate(t_data *info)
 */
 void	build_info(t_data *info, char **argv, int argc)
 {
+	
 	info->philo = ft_atoi(argv[1]);
 	sem_unchain(info);
 	info->death = ft_atoi(argv[2]);
@@ -109,7 +117,9 @@ void	build_info(t_data *info, char **argv, int argc)
 	info->start = sem_open("start", O_CREAT, 0664, 0);
 	info->done = sem_open("done", O_CREAT, 0664, 0);
 	info->print = sem_open("print", O_CREAT, 0664, 1);
-	info->pid = malloc(sizeof(pid_t) * info->philo);
-	info->last_eaten = malloc(sizeof(long long) * info->philo);
+	if (!ft_malloc((void *)&(info->pid), sizeof(pid_t) * info->philo))
+		return (freestruct(info));
+	if (!ft_malloc((void *)&(info->last_eaten), 8 * info->philo))
+		return (freestruct(info));
 	sem_generate(info);
 }
