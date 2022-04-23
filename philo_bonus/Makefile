@@ -6,7 +6,7 @@
 #    By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/12 18:02:33 by wding-ha          #+#    #+#              #
-#    Updated: 2022/04/22 17:33:44 by wding-ha         ###   ########.fr        #
+#    Updated: 2022/04/23 22:26:56 by wding-ha         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@
 #FILE NAME#
 ###########
 
-NAME			= philo
+NAME			= philo_bonus
 
 #######
 #FLAGS#
