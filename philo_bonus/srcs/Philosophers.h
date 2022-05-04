@@ -6,7 +6,7 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 16:05:20 by wding-ha          #+#    #+#             */
-/*   Updated: 2022/04/23 22:06:56 by wding-ha         ###   ########.fr       */
+/*   Updated: 2022/05/04 04:41:50 by wding-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,16 +31,21 @@ typedef struct s_data {
 	int				philo;
 	int				death;
 	int				eat;
+	int				i;
 	int				sleep;
 	int				timeleft;		
 	long long		*last_eaten;
 	int				dead;
+	int				fin;
+	pthread_t		finish;
 	pid_t			*pid;
 	sem_t			**sem;
 	sem_t			**monitor;
 	sem_t			*print;
 	sem_t			*start;
-	sem_t			*done;
+	sem_t			*done[200];
+	sem_t			*check;
+	sem_t			*deathcheck;
 }				t_data;
 
 typedef struct s_philo {
@@ -67,5 +72,7 @@ void		freestruct(t_data *info);
 int			error(int i);
 void		sem_unchain(t_data *info);
 void		freestruct(t_data *info);
-
+void		done_checker(t_data *info);
+void		*done(void *data);
+int			return_stats(t_data *info);
 #endif

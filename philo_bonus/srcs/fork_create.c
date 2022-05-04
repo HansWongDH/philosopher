@@ -6,7 +6,7 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 21:25:15 by wding-ha          #+#    #+#             */
-/*   Updated: 2022/04/22 23:13:01 by wding-ha         ###   ########.fr       */
+/*   Updated: 2022/05/04 04:39:18 by wding-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,10 @@ void	eat(t_philo *info)
 	print_text("has taken a fork\n", YELLOW, info->id, info->data);
 	print_text("is eating\n", GREEN, info->id, info->data);
 	sem_post(info->data->monitor[info->id]);
-	info->eaten--;
 	ft_msleep(info->data->eat, get_ms());
+	info->eaten--;
 	if (!info->eaten)
-		sem_post(info->data->done);
+		sem_post(info->data->done[info->id]);
 	sem_post(info->data->sem[info->lfork]);
 	sem_post(info->data->sem[info->rfork]);
 }

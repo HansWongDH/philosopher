@@ -6,7 +6,7 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 19:48:57 by wding-ha          #+#    #+#             */
-/*   Updated: 2022/04/22 23:15:49 by wding-ha         ###   ########.fr       */
+/*   Updated: 2022/05/05 05:54:06 by wding-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,24 +19,53 @@
 	the corresponding monitoring semaphore, if it is 1, the last_eaten time for the
 	corresponding philo stored in the struct on main process will get updated
 */
-void	death_updating(t_data *info, int i)
+
+void	*update(void *data)
 {
-	if (info->monitor[i]->__align >= 1)
+	t_data	*info;
+	int		i;
+
+	info = data;
+	i = info->i;
+	sem_post(info->check);
+	while (return_stats(info))
 	{
+		sem_wait(info->monitor[i]);
+		sem_wait(info->deathcheck);
 		info->last_eaten[i] = get_ms();
-		info->monitor[i]->__align = 0;
+		sem_post(info->deathcheck);
 	}
+	return (NULL);
 }
 
+void	timer_refresh(t_data *info)
+{
+	pthread_t	check[200];
+	int			i;
+
+	i = 0;
+	while (i < info->philo)
+	{
+		
+		info->i = i;
+		pthread_create(&check[i], NULL, &update, info);
+		sem_wait(info->check);
+		i++;
+	}
+
+}
 void	kill_child(t_data *info)
 {
 	int	i;
 
 	i = 0;
+	sem_wait(info->deathcheck);
 	info->dead = 1;
+	sem_post(info->deathcheck);
 	while (i < info->philo)
 	{
 		kill(info->pid[i], SIGTERM);
+		sem_post(info->done[i]);
 		i++;
 	}
 }
@@ -59,17 +88,21 @@ void	*death(void *arg)
 
 	info = arg;
 	i = 0;
-	while (info->done->__align != (long)info->philo && !info->dead)
+	done_checker(info);
+	timer_refresh(info);
+	while (return_stats(info))
 	{
-		death_updating(info, i);
 		cur = get_ms();
+		sem_wait(info->deathcheck);
 		diff = cur - info->last_eaten[i];
-		if (diff > info->death && !info->dead)
+		if (diff > info->death && !info->dead &&!info->fin)
 		{
+			sem_post(info->deathcheck);
 			kill_child(info);
 			printf("%s%lld\tPhilosopher %d\tdied\n", RED, get_ms(), i);
 			return (NULL);
 		}
+		sem_post(info->deathcheck);
 		i++;
 		if (i == info->philo)
 			i = 0;

@@ -6,7 +6,7 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 13:51:19 by wding-ha          #+#    #+#             */
-/*   Updated: 2022/04/23 22:06:36 by wding-ha         ###   ########.fr       */
+/*   Updated: 2022/05/04 04:42:45 by wding-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,6 @@ int	main(int argc, char **argv)
 	fork_creation(&info);
 	death(&info);
 	sem_kill(&info);
-	freestruct(&info);
-	return (0);
+	pthread_join(info.finish, NULL);
+	exit (1);
 }
