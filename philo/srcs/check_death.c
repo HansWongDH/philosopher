@@ -6,21 +6,22 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 19:48:57 by wding-ha          #+#    #+#             */
-/*   Updated: 2022/05/08 15:59:08 by wding-ha         ###   ########.fr       */
+/*   Updated: 2022/05/08 22:31:21 by wding-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Philosophers.h"
 
-int		get_status(t_philo *info)
+int	get_status(t_philo *info)
 {
-	static	int	i;
+	static int	i;
 
 	pthread_mutex_lock(&(info->data->checklock));
 	i = info->data->done;
 	pthread_mutex_unlock(&(info->data->checklock));
 	return (i);
 }
+
 void	*death(void *arg)
 {
 	long long	cur;
@@ -35,13 +36,14 @@ void	*death(void *arg)
 		cur = get_ms();
 		pthread_mutex_lock(&(info->data->checklock));
 		diff = cur - info[i].last_eaten;
-		pthread_mutex_unlock(&(info->data->checklock));
 		if (diff > info->data->death && !info->data->dead)
 		{
 			info->data->dead = 1;
 			printf("%s%lld\tPhilosopher %d\tdied\n", RED, get_ms(), info[i].id);
+			pthread_mutex_unlock(&(info->data->checklock));
 			return (NULL);
 		}
+		pthread_mutex_unlock(&(info->data->checklock));
 		i++;
 		if (i == info->data->philo)
 			i = 0;

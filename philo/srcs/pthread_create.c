@@ -6,7 +6,7 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 15:24:02 by wding-ha          #+#    #+#             */
-/*   Updated: 2022/05/08 15:58:25 by wding-ha         ###   ########.fr       */
+/*   Updated: 2022/05/08 22:26:45 by wding-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,8 @@ void	*action(void *args)
 	t_philo			*info;
 
 	info = (t_philo *)args;
-	while (!get_start(info))
-		usleep(info->data->philo);
+	pthread_mutex_lock(&(info->data->startlock));
+	pthread_mutex_unlock(&(info->data->startlock));
 	print_text("is thinking\n", CYAN, info->id, info->data);
 	if (info->id % 2 == 0 && !info->data->dead)
 		ft_msleep(info->data->eat / 2, get_ms());
@@ -82,6 +82,7 @@ void	create_thread(t_data *info)
 
 	if (!ft_malloc((void *)&ph, sizeof(t_philo) * info->philo))
 		return ;
+	pthread_mutex_lock(&(info->startlock));
 	i = 0;
 	while (i < info->philo)
 	{
@@ -94,7 +95,7 @@ void	create_thread(t_data *info)
 		pthread_create(&(ph[i].thread), NULL, &action, (void *)&ph[i]);
 		i++;
 	}
-	info->start = 1;
+	pthread_mutex_unlock(&(info->startlock));
 	pthread_create(&checker, NULL, &death, ph);
 	pthread_join(checker, NULL);
 	join_thread(&ph, info->philo);

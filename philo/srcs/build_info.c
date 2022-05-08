@@ -6,7 +6,7 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 15:26:36 by wding-ha          #+#    #+#             */
-/*   Updated: 2022/05/08 15:50:11 by wding-ha         ###   ########.fr       */
+/*   Updated: 2022/05/08 22:27:01 by wding-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,6 @@ void	build_info(t_data *info, char **argv, int argc)
 	info->sleep = ft_atoi(argv[4]);
 	info->dead = 0;
 	info->done = 0;
-	info->start = 0;
 	if (argc == 6)
 	{
 		if (ft_atoi(argv[5]) > 0)
