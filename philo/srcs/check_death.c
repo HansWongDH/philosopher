@@ -6,7 +6,7 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 19:48:57 by wding-ha          #+#    #+#             */
-/*   Updated: 2022/05/08 22:31:21 by wding-ha         ###   ########.fr       */
+/*   Updated: 2022/05/08 22:40:44 by wding-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,16 @@ int	get_status(t_philo *info)
 
 	pthread_mutex_lock(&(info->data->checklock));
 	i = info->data->done;
+	pthread_mutex_unlock(&(info->data->checklock));
+	return (i);
+}
+
+int	get_dead(t_philo *info)
+{
+	static int	i;
+
+	pthread_mutex_lock(&(info->data->checklock));
+	i = info->data->dead;
 	pthread_mutex_unlock(&(info->data->checklock));
 	return (i);
 }

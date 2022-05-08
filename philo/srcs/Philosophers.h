@@ -6,7 +6,7 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 16:05:20 by wding-ha          #+#    #+#             */
-/*   Updated: 2022/05/08 15:55:12 by wding-ha         ###   ########.fr       */
+/*   Updated: 2022/05/08 22:41:12 by wding-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,5 +58,6 @@ void		ft_msleep(int time, long long start);
 int			ft_malloc(void **ptr, size_t size);
 int			error(int i);
 int			get_start(t_philo *info);
+int			get_dead(t_philo *info);
 
 #endif
