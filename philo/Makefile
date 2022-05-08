@@ -6,7 +6,7 @@
 #    By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/12 18:02:33 by wding-ha          #+#    #+#              #
-#    Updated: 2022/04/22 21:42:33 by wding-ha         ###   ########.fr        #
+#    Updated: 2022/05/08 15:48:07 by wding-ha         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,7 @@ NAME			= philo
 #######
 
 CC				= gcc
-CFLAGS			= -Wall -Wextra -Werror -pthread -fsanitize=address -g3
+CFLAGS			= -Wall -Wextra -Werror -pthread -fsanitize=thread -g3 
 RM				= rm -f
 
 ##################

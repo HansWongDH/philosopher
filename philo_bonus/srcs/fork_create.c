@@ -6,7 +6,7 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 21:25:15 by wding-ha          #+#    #+#             */
-/*   Updated: 2022/05/04 04:39:18 by wding-ha         ###   ########.fr       */
+/*   Updated: 2022/05/08 15:33:28 by wding-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int	action(t_philo	*info)
 		eat(info);
 		sleeping(info);
 	}
-	exit(1);
+	exit(0);
 }
 
 void	get_eaten_time(t_data *info)

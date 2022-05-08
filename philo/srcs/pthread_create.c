@@ -6,7 +6,7 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 15:24:02 by wding-ha          #+#    #+#             */
-/*   Updated: 2022/04/20 14:51:25 by wding-ha         ###   ########.fr       */
+/*   Updated: 2022/05/08 15:58:25 by wding-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,9 @@ void	eat(t_philo *info)
 		pthread_mutex_lock(&(info->data->lock[info->lfork]));
 		print_text("has taken a fork\n", YELLOW, info->id, info->data);
 		print_text("is eating\n", GREEN, info->id, info->data);
+		pthread_mutex_lock(&(info->data->checklock));
 		info->last_eaten = get_ms();
+		pthread_mutex_unlock(&(info->data->checklock));
 		info->eaten--;
 		ft_msleep(info->data->eat, get_ms());
 		pthread_mutex_lock(&(info->data->checklock));
@@ -47,7 +49,7 @@ void	*action(void *args)
 	t_philo			*info;
 
 	info = (t_philo *)args;
-	while (!info->data->start)
+	while (!get_start(info))
 		usleep(info->data->philo);
 	print_text("is thinking\n", CYAN, info->id, info->data);
 	if (info->id % 2 == 0 && !info->data->dead)

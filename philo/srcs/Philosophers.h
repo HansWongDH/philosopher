@@ -6,7 +6,7 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 16:05:20 by wding-ha          #+#    #+#             */
-/*   Updated: 2022/04/23 22:05:46 by wding-ha         ###   ########.fr       */
+/*   Updated: 2022/05/08 15:55:12 by wding-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ typedef struct s_data {
 	pthread_mutex_t	*lock;
 	pthread_mutex_t	print;
 	pthread_mutex_t	checklock;
+	pthread_mutex_t	startlock;
 }				t_data;
 
 typedef struct s_philo {
@@ -56,5 +57,6 @@ void		*death(void *arg);
 void		ft_msleep(int time, long long start);
 int			ft_malloc(void **ptr, size_t size);
 int			error(int i);
+int			get_start(t_philo *info);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 15:26:36 by wding-ha          #+#    #+#             */
-/*   Updated: 2022/04/23 22:10:44 by wding-ha         ###   ########.fr       */
+/*   Updated: 2022/05/08 15:50:11 by wding-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,4 +75,5 @@ void	build_info(t_data *info, char **argv, int argc)
 		info->timeleft = INT_MAX;
 	pthread_mutex_init(&(info->print), NULL);
 	pthread_mutex_init(&(info->checklock), NULL);
+	pthread_mutex_init(&(info->startlock), NULL);
 }
