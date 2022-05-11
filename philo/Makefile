@@ -6,7 +6,7 @@
 #    By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/12 18:02:33 by wding-ha          #+#    #+#              #
-#    Updated: 2022/05/08 22:47:36 by wding-ha         ###   ########.fr        #
+#    Updated: 2022/05/11 15:01:01 by wding-ha         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,17 +28,15 @@ RM				= rm -f
 #PATH AND LIBRARY#
 ##################
 
-INC				= -Iinclude -I$(LIBFT_DIR)
-LIBFT_DIR		= ../libs/libft
-LIB				= -L$(LIBFT_DIR) -lft
+INC				= -Iinclude
 SRC_DIR			= srcs/
 
 ##############
 #sSOURCE FILE#
 ##############
 
-S_SRCS			= $(SRC_DIR)main.c $(SRC_DIR)pthread_create.c $(SRC_DIR)build_info.c $(SRC_DIR)print_function.c\
-				$(SRC_DIR)destroy_lock.c $(SRC_DIR)time.c $(SRC_DIR)check_death.c
+S_SRCS			= $(SRC_DIR)main.c $(SRC_DIR)philo_init.c $(SRC_DIR)struct_init.c $(SRC_DIR)philo_utils.c\
+				$(SRC_DIR)mutex_remove.c $(SRC_DIR)philo_monitor.c $(SRC_DIR)philo_libs.c
 
 OBJS			= $(S_SRCS:.c=.o)
 
@@ -49,18 +47,15 @@ OBJS			= $(S_SRCS:.c=.o)
 all:			$(NAME)
 
 $(NAME):		$(OBJS)
-	@make re -C $(LIBFT_DIR)
 	@$(CC) $(CFLAGS) $(INC) -o $(NAME) $(MAIN) $(OBJS) $(LIB)
 
 %.o: %.c
 	@$(CC) $(CFLAGS) $(INC) -c $< -o $@
 clean:
 	@$(RM) $(OBJS) $(B_OBJS)
-	@make clean -C $(LIBFT_DIR)
 
 fclean: clean
 	@$(RM) $(NAME) $(B_NAME)
-	@make fclean -C $(LIBFT_DIR)
 
 re: fclean all
 

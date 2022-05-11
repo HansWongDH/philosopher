@@ -6,7 +6,7 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 16:05:20 by wding-ha          #+#    #+#             */
-/*   Updated: 2022/05/08 22:41:12 by wding-ha         ###   ########.fr       */
+/*   Updated: 2022/05/11 15:08:31 by wding-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@
 # include <stdio.h>
 # include <limits.h>
 # include <sys/time.h>
-# include "libft.h"
 # include "color.h"
 
 typedef struct s_data {
@@ -59,5 +58,7 @@ int			ft_malloc(void **ptr, size_t size);
 int			error(int i);
 int			get_start(t_philo *info);
 int			get_dead(t_philo *info);
-
+int			ft_atoi(const char *str);
+int			ft_isdigit(int c);
+void		ft_putstr_fd(char *s, int fd);
 #endif

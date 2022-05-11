@@ -1,21 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   print_function.c                                   :+:      :+:    :+:   */
+/*   mutex_remove.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/13 17:34:35 by wding-ha          #+#    #+#             */
-/*   Updated: 2022/04/19 18:20:56 by wding-ha         ###   ########.fr       */
+/*   Created: 2022/04/13 18:09:07 by wding-ha          #+#    #+#             */
+/*   Updated: 2022/05/11 15:07:31 by wding-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Philosophers.h"
 
-void	print_text(char *s, char *c, int id, t_data *info)
+void	destroy_mutex(t_data *info)
 {
-	pthread_mutex_lock(&(info->print));
-	if (info->dead == 0)
-		printf("%s%lld\tPhilosopher %d\t%s", c, get_ms(), id, s);
-	pthread_mutex_unlock(&(info->print));
+	int	i;
+
+	i = 0;
+	pthread_mutex_destroy(&(info->print));
+	while (i < info->philo)
+		pthread_mutex_destroy(&(info->lock[i++]));
+	pthread_mutex_destroy(&(info->checklock));
+	pthread_mutex_destroy(&(info->startlock));
+	free(info->lock);
 }

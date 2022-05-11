@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pthread_create.c                                   :+:      :+:    :+:   */
+/*   philo_init.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 15:24:02 by wding-ha          #+#    #+#             */
-/*   Updated: 2022/05/08 22:45:57 by wding-ha         ###   ########.fr       */
+/*   Updated: 2022/05/11 15:11:14 by wding-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	eat(t_philo *info)
 	ft_msleep(info->data->eat, get_ms());
 	pthread_mutex_lock(&(info->data->checklock));
 	if (!info->eaten)
-			info->data->done++;
+		info->data->done++;
 	pthread_mutex_unlock(&(info->data->checklock));
 	pthread_mutex_unlock(&(info->data->lock[info->lfork]));
 	pthread_mutex_unlock(&(info->data->lock[info->rfork]));
