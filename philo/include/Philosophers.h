@@ -6,7 +6,7 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 16:05:20 by wding-ha          #+#    #+#             */
-/*   Updated: 2022/05/11 15:08:31 by wding-ha         ###   ########.fr       */
+/*   Updated: 2022/05/11 15:52:40 by wding-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,20 +45,36 @@ typedef struct s_philo {
 	t_data			*data;
 }				t_philo;
 
+/*Error handling && struct building*/
 int			input_checking(char **av, int ac);
+int			error(int i);
 void		build_info(t_data *info, char **argv, int argc);
-void		*action(void *args);
+
+/*Philo initialization*/
 void		create_thread(t_data *info);
+void		join_thread(t_philo **ph, int num);
+
+/*Printing function*/
 void		print_text(char *s, char *c, int id, t_data *info);
+
+/*Free and destroy mutex*/
 void		destroy_mutex(t_data *info);
-long long	get_ms(void);
+
+/*Philo Monitor*/
 void		*death(void *arg);
+
+/*Philo utilities*/
+long long	get_ms(void);
 void		ft_msleep(int time, long long start);
 int			ft_malloc(void **ptr, size_t size);
-int			error(int i);
-int			get_start(t_philo *info);
-int			get_dead(t_philo *info);
+
+/*Libft Function*/
 int			ft_atoi(const char *str);
 int			ft_isdigit(int c);
 void		ft_putstr_fd(char *s, int fd);
+
+/*Get information*/
+int			get_start(t_philo *info);
+int			get_dead(t_philo *info);
+
 #endif

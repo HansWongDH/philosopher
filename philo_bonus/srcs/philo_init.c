@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fork_create.c                                      :+:      :+:    :+:   */
+/*   philo_init.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 21:25:15 by wding-ha          #+#    #+#             */
-/*   Updated: 2022/05/08 15:33:28 by wding-ha         ###   ########.fr       */
+/*   Updated: 2022/05/11 17:31:54 by wding-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,5 +107,6 @@ int	fork_creation(t_data *info)
 	}
 	get_eaten_time(info);
 	sem_post(info->start);
+	pthread_create(&(info->finish), NULL, &done, info);
 	return (0);
 }

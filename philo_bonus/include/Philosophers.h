@@ -6,7 +6,7 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 16:05:20 by wding-ha          #+#    #+#             */
-/*   Updated: 2022/05/04 04:41:50 by wding-ha         ###   ########.fr       */
+/*   Updated: 2022/05/11 17:26:33 by wding-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@
 # include <signal.h>
 # include <limits.h>
 # include <fcntl.h>
-# include "libft.h"
 # include "color.h"
 
 typedef struct s_data {
@@ -75,4 +74,12 @@ void		freestruct(t_data *info);
 void		done_checker(t_data *info);
 void		*done(void *data);
 int			return_stats(t_data *info);
+
+/*Libft Function*/
+int			ft_atoi(const char *str);
+int			ft_isdigit(int c);
+void		ft_putstr_fd(char *s, int fd);
+char		*ft_strjoin(char const *s1, char const *s2);
+char		*ft_itoa(int n);
+
 #endif

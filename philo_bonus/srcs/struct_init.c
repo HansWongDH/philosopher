@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   build_info.c                                       :+:      :+:    :+:   */
+/*   struct_init.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 15:26:36 by wding-ha          #+#    #+#             */
-/*   Updated: 2022/05/04 04:35:48 by wding-ha         ###   ########.fr       */
+/*   Updated: 2022/05/11 17:28:19 by wding-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ void	sem_generate(t_data *info)
 	{
 		str = ft_itoa(i);
 		d = ft_strjoin(str, "d");
-		s = ft_strjoin(str,  "s");
+		s = ft_strjoin(str, "s");
 		info->sem[i] = ft_sem_create(str, 1);
 		info->monitor[i] = ft_sem_create(d, 0);
 		info->done[i] = ft_sem_create(s, 0);
@@ -103,7 +103,6 @@ void	sem_generate(t_data *info)
 */
 void	build_info(t_data *info, char **argv, int argc)
 {
-	
 	info->philo = ft_atoi(argv[1]);
 	sem_unchain(info);
 	info->death = ft_atoi(argv[2]);

@@ -6,7 +6,7 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 19:48:57 by wding-ha          #+#    #+#             */
-/*   Updated: 2022/05/11 15:07:40 by wding-ha         ###   ########.fr       */
+/*   Updated: 2022/05/11 15:45:13 by wding-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	*dead(t_philo *info, int i)
 	info->data->dead = 1;
 	pthread_mutex_unlock(&(info->data->print));
 	pthread_mutex_unlock(&(info->data->checklock));
-	printf("%s%lld\tPhilosopher %d\tdied\n", RED, get_ms(), info[i].id);
+	printf("%s%lld %d died\n", RED, get_ms(), info[i].id);
 	return (NULL);
 }
 
@@ -59,20 +59,12 @@ void	*death(void *arg)
 		pthread_mutex_lock(&(info->data->checklock));
 		diff = cur - info[i].last_eaten;
 		pthread_mutex_unlock(&(info->data->checklock));
-		if (diff > info->data->death && !info->data->dead)
+		if (diff > info->data->death && !get_dead(info))
 			return (dead(info, i));
 		i++;
 		if (i == info->data->philo)
 			i = 0;
-		usleep(info->data->death);
+		usleep(info->data->philo);
 	}
 	return (NULL);
-}
-
-int	ft_malloc(void **ptr, size_t size)
-{
-	*ptr = malloc(size);
-	if (!(*ptr))
-		return (0);
-	return (1);
 }
