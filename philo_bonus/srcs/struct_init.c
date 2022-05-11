@@ -6,7 +6,7 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 15:26:36 by wding-ha          #+#    #+#             */
-/*   Updated: 2022/05/11 17:28:19 by wding-ha         ###   ########.fr       */
+/*   Updated: 2022/05/11 18:25:54 by wding-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,8 +74,8 @@ void	sem_generate(t_data *info)
 	char	*s;
 
 	i = 0;
-	if (!ft_malloc((void *)&(info->sem), sizeof(sem_t *) * info->philo))
-		return (freestruct(info));
+	// if (!ft_malloc((void *)&(info->sem), sizeof(sem_t *) * info->philo))
+	// 	return (freestruct(info));
 	if (!ft_malloc((void *)&(info->monitor), sizeof(sem_t *) * info->philo))
 		return (freestruct(info));
 	while (i < info->philo)
@@ -83,7 +83,7 @@ void	sem_generate(t_data *info)
 		str = ft_itoa(i);
 		d = ft_strjoin(str, "d");
 		s = ft_strjoin(str, "s");
-		info->sem[i] = ft_sem_create(str, 1);
+	// 	info->sem[i] = ft_sem_create(str, 1);
 		info->monitor[i] = ft_sem_create(d, 0);
 		info->done[i] = ft_sem_create(s, 0);
 		free(str);
@@ -91,6 +91,7 @@ void	sem_generate(t_data *info)
 		free(s);
 		i++;
 	}
+	info->sem = sem_open("/fork", O_CREAT, 0664, info->philo);
 	info->deathcheck = sem_open("deathcheck", O_CREAT, 0664, 1);
 }
 

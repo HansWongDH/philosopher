@@ -6,7 +6,7 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 17:34:35 by wding-ha          #+#    #+#             */
-/*   Updated: 2022/05/11 17:27:58 by wding-ha         ###   ########.fr       */
+/*   Updated: 2022/05/11 19:25:55 by wding-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ void	*done(void *data)
 	{
 		sem_wait(info->done[i]);
 		i++;
+		printf("done");
 	}
 	sem_wait(info->deathcheck);
 	info->fin = 1;
@@ -40,7 +41,7 @@ void	*done(void *data)
 	return (NULL);
 }
 
-int		return_stats(t_data *info)
+int	return_stats(t_data *info)
 {
 	int	i;
 
@@ -49,7 +50,7 @@ int		return_stats(t_data *info)
 	if (!info->fin && !info->dead)
 		i = 1;
 	sem_post(info->deathcheck);
-	return(i);
+	return (i);
 }
 
 long long	get_ms(void)

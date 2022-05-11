@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sem_utils.c                                        :+:      :+:    :+:   */
+/*   sem_remove.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/21 17:55:57 by wding-ha          #+#    #+#             */
-/*   Updated: 2022/05/04 04:35:42 by wding-ha         ###   ########.fr       */
+/*   Updated: 2022/05/11 18:27:35 by wding-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,6 @@ void	freestruct(t_data *info)
 		free(info->pid);
 	if (info->last_eaten)
 		free(info->last_eaten);
-	if (info->sem)
-		free(info->sem);
 	if (info->monitor)
 		free(info->monitor);	
 }
@@ -46,10 +44,10 @@ void	sem_unchain(t_data *info)
 		i++;
 	}
 	sem_unlink("start");
-	sem_unlink("done");
 	sem_unlink("print");
 	sem_unlink("check");
 	sem_unlink("deathcheck");
+	sem_unlink("/fork");
 }
 
 void	sem_kill(t_data *info)
@@ -60,7 +58,6 @@ void	sem_kill(t_data *info)
 	sem_unchain(info);
 	while (i < info->philo)
 	{
-		sem_close(info->sem[i]);
 		sem_close(info->monitor[i]);
 		sem_close(info->done[i]);
 		i++;
@@ -69,6 +66,7 @@ void	sem_kill(t_data *info)
 	sem_close(info->print);
 	sem_close(info->check);
 	sem_close(info->deathcheck);
+	sem_close(info->sem);
 }
 
 sem_t	*ft_sem_create(char *s, int i)

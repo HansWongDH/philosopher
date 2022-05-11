@@ -6,7 +6,7 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 19:48:57 by wding-ha          #+#    #+#             */
-/*   Updated: 2022/05/11 17:31:21 by wding-ha         ###   ########.fr       */
+/*   Updated: 2022/05/11 20:16:55 by wding-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,14 +46,13 @@ void	timer_refresh(t_data *info)
 	i = 0;
 	while (i < info->philo)
 	{
-		
 		info->i = i;
 		pthread_create(&check[i], NULL, &update, info);
 		sem_wait(info->check);
 		i++;
 	}
-
 }
+
 void	kill_child(t_data *info)
 {
 	int	i;
@@ -65,7 +64,7 @@ void	kill_child(t_data *info)
 	while (i < info->philo)
 	{
 		kill(info->pid[i], SIGTERM);
-		sem_post(info->done[i]);
+		sem_post(info->monitor[i]);
 		i++;
 	}
 }
@@ -94,7 +93,7 @@ void	*death(void *arg)
 		cur = get_ms();
 		sem_wait(info->deathcheck);
 		diff = cur - info->last_eaten[i];
-		if (diff > info->death && !info->dead &&!info->fin)
+		if (diff > info->death && !info->dead && !info->fin)
 		{
 			sem_post(info->deathcheck);
 			kill_child(info);

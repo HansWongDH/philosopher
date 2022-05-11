@@ -6,7 +6,7 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 16:05:20 by wding-ha          #+#    #+#             */
-/*   Updated: 2022/05/11 17:26:33 by wding-ha         ###   ########.fr       */
+/*   Updated: 2022/05/11 20:19:55 by wding-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ typedef struct s_data {
 	int				fin;
 	pthread_t		finish;
 	pid_t			*pid;
-	sem_t			**sem;
+	sem_t			*sem;
 	sem_t			**monitor;
 	sem_t			*print;
 	sem_t			*start;
@@ -74,6 +74,7 @@ void		freestruct(t_data *info);
 void		done_checker(t_data *info);
 void		*done(void *data);
 int			return_stats(t_data *info);
+void		kill_child(t_data *info);
 
 /*Libft Function*/
 int			ft_atoi(const char *str);

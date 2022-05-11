@@ -6,7 +6,7 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 21:25:15 by wding-ha          #+#    #+#             */
-/*   Updated: 2022/05/11 17:31:54 by wding-ha         ###   ########.fr       */
+/*   Updated: 2022/05/11 19:59:48 by wding-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,9 @@
 */
 void	eat(t_philo *info)
 {	
-	sem_wait(info->data->sem[info->rfork]);
+	sem_wait(info->data->sem);
 	print_text("has taken a fork\n", YELLOW, info->id, info->data);
-	sem_wait(info->data->sem[info->lfork]);
+	sem_wait(info->data->sem);
 	print_text("has taken a fork\n", YELLOW, info->id, info->data);
 	print_text("is eating\n", GREEN, info->id, info->data);
 	sem_post(info->data->monitor[info->id]);
@@ -28,8 +28,8 @@ void	eat(t_philo *info)
 	info->eaten--;
 	if (!info->eaten)
 		sem_post(info->data->done[info->id]);
-	sem_post(info->data->sem[info->lfork]);
-	sem_post(info->data->sem[info->rfork]);
+	sem_post(info->data->sem);
+	sem_post(info->data->sem);
 }
 
 void	sleeping(t_philo *info)
@@ -107,6 +107,5 @@ int	fork_creation(t_data *info)
 	}
 	get_eaten_time(info);
 	sem_post(info->start);
-	pthread_create(&(info->finish), NULL, &done, info);
 	return (0);
 }
