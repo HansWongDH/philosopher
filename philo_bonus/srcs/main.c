@@ -6,7 +6,7 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 13:51:19 by wding-ha          #+#    #+#             */
-/*   Updated: 2022/05/11 20:20:16 by wding-ha         ###   ########.fr       */
+/*   Updated: 2022/05/18 14:38:53 by wding-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,19 +24,13 @@ void	waitforpid(t_data *info)
 	int	i;
 
 	waitpid(-1, &i, 0);
-	if (i >= 0)
-	{
-		sem_wait(info->deathcheck);
-		info->fin = 1;
-		sem_post(info->deathcheck);
+	if (i > 0)
 		kill_child(info);
-	}
 }
 
 int	main(int argc, char **argv)
 {
 	t_data		info;
-	pthread_t	monitor;
 
 	if (argc != 5 && argc != 6)
 		return (error(0));
@@ -44,8 +38,7 @@ int	main(int argc, char **argv)
 		return (0);
 	build_info(&info, argv, argc);
 	fork_creation(&info);
-	pthread_create(&monitor, NULL, &death, &info);
 	waitforpid(&info);
 	sem_kill(&info);
-	exit (1);
+	exit (0);
 }

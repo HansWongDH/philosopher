@@ -6,19 +6,24 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 15:24:02 by wding-ha          #+#    #+#             */
-/*   Updated: 2022/05/11 15:42:41 by wding-ha         ###   ########.fr       */
+/*   Updated: 2022/05/18 15:00:21 by wding-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Philosophers.h"
 
-void	eat(t_philo *info)
-{	
+void	pickfork(t_philo *info)
+{
 	pthread_mutex_lock(&(info->data->lock[info->rfork]));
 	print_text("has taken a fork\n", YELLOW, info->id, info->data);
 	pthread_mutex_lock(&(info->data->lock[info->lfork]));
 	print_text("has taken a fork\n", YELLOW, info->id, info->data);
 	print_text("is eating\n", GREEN, info->id, info->data);
+}
+
+void	eat(t_philo *info)
+{	
+	pickfork(info);
 	pthread_mutex_lock(&(info->data->checklock));
 	info->last_eaten = get_ms();
 	pthread_mutex_unlock(&(info->data->checklock));

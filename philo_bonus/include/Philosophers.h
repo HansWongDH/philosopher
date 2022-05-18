@@ -6,7 +6,7 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 16:05:20 by wding-ha          #+#    #+#             */
-/*   Updated: 2022/05/11 20:19:55 by wding-ha         ###   ########.fr       */
+/*   Updated: 2022/05/18 15:08:47 by wding-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,19 +32,11 @@ typedef struct s_data {
 	int				eat;
 	int				i;
 	int				sleep;
-	int				timeleft;		
-	long long		*last_eaten;
-	int				dead;
-	int				fin;
-	pthread_t		finish;
+	int				timeleft;
 	pid_t			*pid;
-	sem_t			*sem;
-	sem_t			**monitor;
-	sem_t			*print;
 	sem_t			*start;
-	sem_t			*done[200];
-	sem_t			*check;
-	sem_t			*deathcheck;
+	sem_t			*sem;
+	sem_t			*print;
 }				t_data;
 
 typedef struct s_philo {
@@ -53,6 +45,9 @@ typedef struct s_philo {
 	int				rfork;
 	int				lfork;
 	int				eaten;
+	int				fin;
+	long long		last_eaten;
+	pthread_mutex_t	check;
 	t_data			*data;
 }				t_philo;
 
@@ -69,18 +64,14 @@ void		wait_for_my_child(t_data info);
 void		*death(void *arg);
 void		freestruct(t_data *info);
 int			error(int i);
-void		sem_unchain(t_data *info);
+void		sem_unchain(void);
 void		freestruct(t_data *info);
-void		done_checker(t_data *info);
-void		*done(void *data);
-int			return_stats(t_data *info);
+int			return_stats(t_philo *info);
 void		kill_child(t_data *info);
 
 /*Libft Function*/
 int			ft_atoi(const char *str);
 int			ft_isdigit(int c);
 void		ft_putstr_fd(char *s, int fd);
-char		*ft_strjoin(char const *s1, char const *s2);
-char		*ft_itoa(int n);
 
 #endif

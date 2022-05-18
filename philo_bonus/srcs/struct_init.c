@@ -6,7 +6,7 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 15:26:36 by wding-ha          #+#    #+#             */
-/*   Updated: 2022/05/11 18:25:54 by wding-ha         ###   ########.fr       */
+/*   Updated: 2022/05/18 14:48:53 by wding-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,39 +63,6 @@ int	input_checking(char **av, int ac)
 }
 
 /*
-	1. Generate 2 set of array of semaphore, 1 represent fork,
-	the other one use to communicate with death_checker 
-*/
-void	sem_generate(t_data *info)
-{
-	int		i;
-	char	*str;
-	char	*d;
-	char	*s;
-
-	i = 0;
-	// if (!ft_malloc((void *)&(info->sem), sizeof(sem_t *) * info->philo))
-	// 	return (freestruct(info));
-	if (!ft_malloc((void *)&(info->monitor), sizeof(sem_t *) * info->philo))
-		return (freestruct(info));
-	while (i < info->philo)
-	{
-		str = ft_itoa(i);
-		d = ft_strjoin(str, "d");
-		s = ft_strjoin(str, "s");
-	// 	info->sem[i] = ft_sem_create(str, 1);
-		info->monitor[i] = ft_sem_create(d, 0);
-		info->done[i] = ft_sem_create(s, 0);
-		free(str);
-		free(d);
-		free(s);
-		i++;
-	}
-	info->sem = sem_open("/fork", O_CREAT, 0664, info->philo);
-	info->deathcheck = sem_open("deathcheck", O_CREAT, 0664, 1);
-}
-
-/*
 	1. Initialize struct, transform input into struct for philo generation;
 	2. Creation of multiple semaphore that shared among process;
 	3. start - synchronize the starting of process
@@ -105,12 +72,10 @@ void	sem_generate(t_data *info)
 void	build_info(t_data *info, char **argv, int argc)
 {
 	info->philo = ft_atoi(argv[1]);
-	sem_unchain(info);
+	sem_unchain();
 	info->death = ft_atoi(argv[2]);
 	info->eat = ft_atoi(argv[3]);
 	info->sleep = ft_atoi(argv[4]);
-	info->dead = 0;
-	info->fin = 0;
 	if (argc == 6)
 	{
 		if (ft_atoi(argv[5]) > 0)
@@ -120,12 +85,9 @@ void	build_info(t_data *info, char **argv, int argc)
 	}
 	else
 		info->timeleft = INT_MAX;
+	if (!ft_malloc((void *)&(info->pid), sizeof(pid_t) * info->philo))
+		return ;
 	info->start = sem_open("start", O_CREAT, 0664, 0);
 	info->print = sem_open("print", O_CREAT, 0664, 1);
-	info->check = sem_open("check", O_CREAT, 0664, 0);
-	if (!ft_malloc((void *)&(info->pid), sizeof(pid_t) * info->philo))
-		return (freestruct(info));
-	if (!ft_malloc((void *)&(info->last_eaten), 8 * info->philo))
-		return (freestruct(info));
-	sem_generate(info);
+	info->sem = sem_open("/fork", O_CREAT, 0664, info->philo);
 }
