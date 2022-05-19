@@ -6,7 +6,7 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 15:24:02 by wding-ha          #+#    #+#             */
-/*   Updated: 2022/05/18 15:00:21 by wding-ha         ###   ########.fr       */
+/*   Updated: 2022/05/19 15:03:33 by wding-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,9 @@ void	*action(void *args)
 
 	info = (t_philo *)args;
 	pthread_mutex_lock(&(info->data->startlock));
+	pthread_mutex_lock(&(info->data->checklock));
 	info->last_eaten = get_ms();
+	pthread_mutex_unlock(&(info->data->checklock));
 	pthread_mutex_unlock(&(info->data->startlock));
 	print_text("is thinking\n", CYAN, info->id, info->data);
 	if (info->id % 2 == 0)
