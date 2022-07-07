@@ -6,7 +6,7 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 16:05:20 by wding-ha          #+#    #+#             */
-/*   Updated: 2022/05/18 15:08:47 by wding-ha         ###   ########.fr       */
+/*   Updated: 2022/07/07 17:14:59 by wding-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ typedef struct s_data {
 	sem_t			*start;
 	sem_t			*sem;
 	sem_t			*print;
+	sem_t			*done[200];
 }				t_data;
 
 typedef struct s_philo {
@@ -68,10 +69,11 @@ void		sem_unchain(void);
 void		freestruct(t_data *info);
 int			return_stats(t_philo *info);
 void		kill_child(t_data *info);
-
+void		monitor(long long curr, int time, t_philo *info);
 /*Libft Function*/
 int			ft_atoi(const char *str);
 int			ft_isdigit(int c);
 void		ft_putstr_fd(char *s, int fd);
+char		*ft_itoa(int n);
 
 #endif

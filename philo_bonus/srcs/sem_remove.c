@@ -6,11 +6,27 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/21 17:55:57 by wding-ha          #+#    #+#             */
-/*   Updated: 2022/05/18 14:49:03 by wding-ha         ###   ########.fr       */
+/*   Updated: 2022/07/07 17:42:12 by wding-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Philosophers.h"
+
+// void	sem_remove(t_data *info)
+// {
+// 	int		i;
+// 	char	*s;
+
+// 	i = 0;
+// 	while (i < info->philo)
+// 	{
+// 		s = ft_itoa(i);
+// 		sem_unlink(s);
+// 		sem_close(info->done[i]);
+// 		free(s);
+// 		i++;
+// 	}
+// }
 
 void	freestruct(t_data *info)
 {

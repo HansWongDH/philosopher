@@ -6,7 +6,7 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 21:25:15 by wding-ha          #+#    #+#             */
-/*   Updated: 2022/05/18 15:13:22 by wding-ha         ###   ########.fr       */
+/*   Updated: 2022/07/07 18:18:29 by wding-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,10 @@
 void	pickfork(t_philo *info)
 {
 	sem_wait(info->data->sem);
+	monitor(get_ms(), 0, info);
 	print_text("has taken a fork\n", YELLOW, info->id, info->data);
 	sem_wait(info->data->sem);
+	monitor(get_ms(), 0, info);
 	print_text("has taken a fork\n", YELLOW, info->id, info->data);
 	print_text("is eating\n", GREEN, info->id, info->data);
 }
@@ -28,10 +30,8 @@ void	pickfork(t_philo *info)
 void	eat(t_philo *info)
 {	
 	pickfork(info);
-	pthread_mutex_lock(&(info->check));
 	info->last_eaten = get_ms();
-	pthread_mutex_unlock(&(info->check));
-	ft_msleep(info->data->eat, get_ms());
+	monitor(get_ms(), info->data->eat, info);
 	info->eaten--;
 	sem_post(info->data->sem);
 	sem_post(info->data->sem);
@@ -40,7 +40,7 @@ void	eat(t_philo *info)
 void	sleeping(t_philo *info)
 {
 	print_text("is sleeping\n", BLUE, info->id, info->data);
-	ft_msleep(info->data->sleep, get_ms());
+	monitor(get_ms(), info->data->sleep, info);
 }
 
 /*
@@ -52,28 +52,22 @@ void	sleeping(t_philo *info)
 */
 int	action(t_philo	*info)
 {
-	pthread_t	monitor;
-
-	pthread_mutex_init(&(info->check), NULL);
 	sem_wait(info->data->start);
-	pthread_mutex_lock(&(info->check));
 	info->last_eaten = get_ms();
-	pthread_mutex_unlock(&(info->check));
-	pthread_create(&monitor, NULL, &death, info);
 	print_text("is thinking\n", CYAN, info->id, info->data);
 	sem_post(info->data->start);
+	monitor(get_ms(), 0, info);
 	if (info->id % 2 == 0)
-		usleep(info->data->eat * 500);
+		monitor(get_ms(), info->data->eat / 2, info);
 	while (info->eaten > 0 && info->data->philo > 1)
 	{
+		monitor(get_ms(), 0, info);
 		eat(info);
 		sleeping(info);
 	}
-	pthread_mutex_lock(&(info->check));
-	info->fin = 1;
-	pthread_mutex_unlock(&(info->check));
-	pthread_join(monitor, NULL);
-	exit(0);
+	if (info->data->philo % 2 == 1 && info->id == info->data->philo - 2)
+		monitor(get_ms(), info->data->eat, info);
+	exit (0);
 }
 
 /*

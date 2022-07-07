@@ -6,7 +6,7 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 17:34:35 by wding-ha          #+#    #+#             */
-/*   Updated: 2022/05/18 15:08:41 by wding-ha         ###   ########.fr       */
+/*   Updated: 2022/07/07 17:25:37 by wding-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,17 +22,17 @@ void	print_text(char *s, char *c, int id, t_data *info)
 	sem_post(info->print);
 }
 
-int	return_stats(t_philo *info)
-{
-	int	i;
+// int	return_stats(t_philo *info)
+// {
+// 	int	i;
 
-	i = 0;
-	pthread_mutex_lock(&(info->check));
-	if (!info->fin)
-		i = 1;
-	pthread_mutex_unlock(&(info->check));
-	return (i);
-}
+// 	i = 0;
+// 	pthread_mutex_lock(&(info->check));
+// 	if (!info->fin)
+// 		i = 1;
+// 	pthread_mutex_unlock(&(info->check));
+// 	return (i);
+// }
 
 long long	get_ms(void)
 {

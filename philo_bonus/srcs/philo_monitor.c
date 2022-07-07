@@ -6,7 +6,7 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 19:48:57 by wding-ha          #+#    #+#             */
-/*   Updated: 2022/05/19 14:56:29 by wding-ha         ###   ########.fr       */
+/*   Updated: 2022/07/07 18:17:16 by wding-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,30 +40,50 @@ void	kill_child(t_data *info)
 	3. info->done will get increased by 1 everytime a philo is done
 	with their eating, and the loop will stop once all of them have finished eating
 */
-void	*death(void *arg)
-{
-	long long	cur;
-	long long	diff;
-	t_philo		*info;
 
-	info = arg;
-	while (return_stats(info))
+void	monitor(long long curr, int time, t_philo *info)
+{
+	long long	diff;
+	long long	sleep;
+
+	diff = curr - info->last_eaten;
+	sleep = diff + time;
+	if (sleep > info->data->death)
 	{
-		cur = get_ms();
-		pthread_mutex_lock(&(info->check));
-		diff = cur - info->last_eaten;
-		pthread_mutex_unlock(&(info->check));
-		if (diff > info->data->death)
-		{
-			sem_wait(info->data->print);
-			printf("%s%lld %d died\n", RED, get_ms(), info->id);
-			exit(1);
-			return (NULL);
-		}
-		usleep(info->data->philo);
+		if (time > 0)
+			ft_msleep(time - (sleep - info->data->death), get_ms());
+		sem_wait(info->data->print);
+		printf("%s%lld %d died\n", RED, get_ms(), info->id);
+		exit(1);
 	}
-	return (NULL);
+	else
+		ft_msleep(time, get_ms());
 }
+
+// void	*death(void *arg)
+// {
+// 	long long	cur;
+// 	long long	diff;
+// 	t_philo		*info;
+
+// 	info = arg;
+// 	while (return_stats(info))
+// 	{
+// 		cur = get_ms();
+// 		pthread_mutex_lock(&(info->check));
+// 		diff = cur - info->last_eaten;
+// 		pthread_mutex_unlock(&(info->check));
+// 		if (diff > info->data->death)
+// 		{
+			// sem_wait(info->data->print);
+			// printf("%s%lld %d died\n", RED, get_ms(), info->id);
+			// exit(1);
+// 			return (NULL);
+// 		}
+// 		usleep(info->data->philo);
+// 	}
+// 	return (NULL);
+// }
 
 int	ft_malloc(void **ptr, size_t size)
 {

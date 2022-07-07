@@ -6,7 +6,7 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 13:51:19 by wding-ha          #+#    #+#             */
-/*   Updated: 2022/05/19 14:58:49 by wding-ha         ###   ########.fr       */
+/*   Updated: 2022/07/07 18:19:37 by wding-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 	4. initilize death checker to monitor philo using main process;
 	5. remove all the semaphore & free memory;
 */
+
 void	waitforpid(t_data *info)
 {
 	int	ex;
@@ -28,7 +29,7 @@ void	waitforpid(t_data *info)
 	while (i < info->philo)
 	{
 		waitpid(-1, &ex, 0);
-		if (ex != 0)
+		if (WEXITSTATUS(ex) != 0)
 		{
 			kill_child(info);
 			break ;
