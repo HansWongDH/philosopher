@@ -6,7 +6,7 @@
 #    By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/12 18:02:33 by wding-ha          #+#    #+#              #
-#    Updated: 2022/07/07 18:19:22 by wding-ha         ###   ########.fr        #
+#    Updated: 2022/07/08 18:33:23 by wding-ha         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,7 @@ NAME			= philo_bonus
 #######
 
 CC				= gcc
-CFLAGS			= -Wall -Wextra -Werror -pthread -fsanitize=address -g3
+CFLAGS			= -Wall -Wextra -Werror -pthread
 RM				= rm -f
 
 ##################

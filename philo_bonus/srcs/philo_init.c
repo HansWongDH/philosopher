@@ -6,7 +6,7 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 21:25:15 by wding-ha          #+#    #+#             */
-/*   Updated: 2022/07/07 18:18:29 by wding-ha         ###   ########.fr       */
+/*   Updated: 2022/07/08 18:31:51 by wding-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,10 @@
 void	pickfork(t_philo *info)
 {
 	sem_wait(info->data->sem);
-	monitor(get_ms(), 0, info);
+	monitor(get_ms(), 0, info, 0);
 	print_text("has taken a fork\n", YELLOW, info->id, info->data);
 	sem_wait(info->data->sem);
-	monitor(get_ms(), 0, info);
+	monitor(get_ms(), 0, info, 0);
 	print_text("has taken a fork\n", YELLOW, info->id, info->data);
 	print_text("is eating\n", GREEN, info->id, info->data);
 }
@@ -31,7 +31,7 @@ void	eat(t_philo *info)
 {	
 	pickfork(info);
 	info->last_eaten = get_ms();
-	monitor(get_ms(), info->data->eat, info);
+	monitor(get_ms(), info->data->eat, info, 0);
 	info->eaten--;
 	sem_post(info->data->sem);
 	sem_post(info->data->sem);
@@ -40,7 +40,7 @@ void	eat(t_philo *info)
 void	sleeping(t_philo *info)
 {
 	print_text("is sleeping\n", BLUE, info->id, info->data);
-	monitor(get_ms(), info->data->sleep, info);
+	monitor(get_ms(), info->data->sleep, info, 0);
 }
 
 /*
@@ -56,17 +56,20 @@ int	action(t_philo	*info)
 	info->last_eaten = get_ms();
 	print_text("is thinking\n", CYAN, info->id, info->data);
 	sem_post(info->data->start);
-	monitor(get_ms(), 0, info);
 	if (info->id % 2 == 0)
-		monitor(get_ms(), info->data->eat / 2, info);
+		monitor(get_ms(), info->data->eat / 2, info, 0);
 	while (info->eaten > 0 && info->data->philo > 1)
 	{
-		monitor(get_ms(), 0, info);
+		monitor(get_ms(), 0, info, 0);
 		eat(info);
 		sleeping(info);
+		if (info->data->eat > info->data->sleep)
+			monitor(get_ms(), info->data->eat - info->data->sleep, info, 1);
+		if (info->data->philo % 2 == 1)
+			monitor(get_ms(), info->data->eat, info, 1);
 	}
-	if (info->data->philo % 2 == 1 && info->id == info->data->philo - 2)
-		monitor(get_ms(), info->data->eat, info);
+	if (info->data->philo == 1)
+		monitor(get_ms(), info->data->death, info, 0);
 	exit (0);
 }
 

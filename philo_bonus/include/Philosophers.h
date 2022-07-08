@@ -6,7 +6,7 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 16:05:20 by wding-ha          #+#    #+#             */
-/*   Updated: 2022/07/07 17:14:59 by wding-ha         ###   ########.fr       */
+/*   Updated: 2022/07/08 17:57:38 by wding-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ void		sem_unchain(void);
 void		freestruct(t_data *info);
 int			return_stats(t_philo *info);
 void		kill_child(t_data *info);
-void		monitor(long long curr, int time, t_philo *info);
+void		monitor(long long curr, int time, t_philo *info, int flag);
 /*Libft Function*/
 int			ft_atoi(const char *str);
 int			ft_isdigit(int c);

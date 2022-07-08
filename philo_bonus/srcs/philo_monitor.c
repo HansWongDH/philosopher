@@ -6,7 +6,7 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 19:48:57 by wding-ha          #+#    #+#             */
-/*   Updated: 2022/07/07 18:17:16 by wding-ha         ###   ########.fr       */
+/*   Updated: 2022/07/08 17:56:14 by wding-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	kill_child(t_data *info)
 	with their eating, and the loop will stop once all of them have finished eating
 */
 
-void	monitor(long long curr, int time, t_philo *info)
+void	monitor(long long curr, int time, t_philo *info, int flag)
 {
 	long long	diff;
 	long long	sleep;
@@ -50,14 +50,15 @@ void	monitor(long long curr, int time, t_philo *info)
 	sleep = diff + time;
 	if (sleep > info->data->death)
 	{
-		if (time > 0)
-			ft_msleep(time - (sleep - info->data->death), get_ms());
+		ft_msleep(time - (sleep - info->data->death), get_ms());
 		sem_wait(info->data->print);
 		printf("%s%lld %d died\n", RED, get_ms(), info->id);
 		exit(1);
 	}
-	else
+	else if (flag == 0)
 		ft_msleep(time, get_ms());
+	else
+		return ;
 }
 
 // void	*death(void *arg)
